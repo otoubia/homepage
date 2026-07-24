@@ -1,1328 +1,990 @@
-
-Conversation with Gemini
-My cv is attached and my linkedin profile is: https://www.linkedin.com/in/olivier-toubia-47273b4/. Create a home page based on this information (index.html). The vibe should be professional and casual. The color scheme should be blue, preferably Columbia blue. Navigation should be streamlined. Include all the information that from the CV on the home page. Keep the same section order, but feel free to create tiles or make navigation easier across sections. Do you use too many emojis. Create an index.html file that I can directly copy and paste to Github to deploy the page from there.
-
-Your index.html file has been generated and is ready to be directly uploaded or pasted into GitHub Pages!
-HTML icon
-index
- HTML 
-Open
-
-Design & Feature Highlights:
-Columbia Blue Theme: Uses an elegant palette inspired by Columbia Blue (#6CACE4), deep navy accents, subtle grey borderings, and crisp white backgrounds to deliver a clean, modern aesthetic.
-
-Professional & Casual Vibe: Modern typography pairing (Merriweather for academic headings, Inter for highly readable body text), card-based grid layouts, and hover interactions.
-
-Streamlined Navigation: Sticky header with smooth scroll links and active scroll tracking so visitors can quickly jump between sections.
-
-Complete Information Inclusion:
-
-Header & Contact: Address, phone, email, and direct link to your LinkedIn profile.
-
-Employment & Education: Arranged in interactive, clean structured tiles maintaining exact timeline ordering.
-
-Research Interests: Presented in clear, modern tag-cards.
-
-Honors and Awards: Complete list with clean minimalist icons (no excessive emoji usage).
-
-Professional Activity: Categorized into Leadership, Editorial/Journal Service, and Ad-hoc reviewing.
-
-Publications: Includes all peer-reviewed journal papers and book chapters/editorials with category filtering (All, Peer-Reviewed, Books/Chapters) and a live real-time search bar.
-
-Outside Activities: Highlighted in a dedicated disclosure section.
-
-Ready for GitHub Pages Deployment: Fully self-contained single HTML file with embedded CSS and JavaScript—no external CSS framework dependencies required.
-
-
-
-
-Your LionMail chats aren’t used to improve our models. Gemini is AI and can make mistakes. Your privacy & GeminiOpens in a new window
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Olivier Toubia | Columbia Business School</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Merriweather:ital,wght@0,300;0,400;0,700;1,300&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --columbia-blue: #6CACE4;
-            --columbia-blue-light: #F0F6FB;
-            --columbia-blue-mid: #C5E1F5;
-            --columbia-blue-dark: #4A8BC2;
-            --navy-dark: #0A192F;
-            --navy-primary: #1E3A8A;
-            --slate-gray: #475569;
-            --light-gray: #F8FAFC;
-            --border-color: #E2E8F0;
-            --card-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
-            --card-shadow-hover: 0 10px 15px -3px rgba(0, 0, 0, 0.08), 0 4px 6px -2px rgba(0, 0, 0, 0.04);
-            --transition-fast: all 0.2s ease-in-out;
-        }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Olivier Toubia - Columbia Business School</title>
+  <!-- Google Fonts & Font Awesome Icons -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Lora:ital,wght@0,500;0,600;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <style>
+    :root {
+      /* Columbia Blue Palette */
+      --primary-blue: #75AADB;    /* Official Columbia Blue */
+      --primary-dark: #1D3557;    /* Deep Navy */
+      --primary-accent: #457B9D;  /* Slate Blue */
+      --bg-light: #F8FAFC;        /* Soft Slate/White */
+      --card-bg: #FFFFFF;
+      --text-main: #2B2D42;
+      --text-muted: #6C757D;
+      --border-color: #E2E8F0;
+      --highlight-bg: #EBF4FC;
+      --sidebar-width: 280px;
+    }
 
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
 
-        html {
-            scroll-behavior: smooth;
-            font-size: 16px;
-        }
+    html {
+      scroll-behavior: smooth;
+    }
 
-        body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-            color: #334155;
-            background-color: #FAFCFE;
-            line-height: 1.6;
-        }
+    body {
+      font-family: 'Inter', sans-serif;
+      color: var(--text-main);
+      background-color: var(--bg-light);
+      line-height: 1.6;
+      display: flex;
+      min-height: 100vh;
+    }
 
-        h1, h2, h3, h4 {
-            color: var(--navy-dark);
-            font-family: 'Merriweather', Georgia, serif;
-            font-weight: 700;
-        }
+    /* Sidebar Navigation */
+    .sidebar {
+      width: var(--sidebar-width);
+      background-color: var(--primary-dark);
+      color: #FFFFFF;
+      position: fixed;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 2rem 1.5rem;
+      z-index: 100;
+      overflow-y: auto;
+    }
 
-        a {
-            color: var(--navy-primary);
-            text-decoration: none;
-            transition: var(--transition-fast);
-        }
+    .profile-header {
+      text-align: left;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+      padding-bottom: 1.5rem;
+      margin-bottom: 1.5rem;
+    }
 
-        a:hover {
-            color: var(--columbia-blue-dark);
-        }
+    .profile-header h1 {
+      font-family: 'Lora', serif;
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: #FFFFFF;
+      margin-bottom: 0.3rem;
+    }
 
-        /* Container */
-        .container {
-            max-width: 1140px;
-            margin: 0 auto;
-            padding: 0 24px;
-        }
+    .profile-header p {
+      font-size: 0.85rem;
+      color: var(--primary-blue);
+      font-weight: 500;
+    }
 
-        /* Navigation */
-        header {
-            position: sticky;
-            top: 0;
-            background-color: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(8px);
-            border-bottom: 1px solid var(--border-color);
-            z-index: 1000;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.02);
-        }
+    .nav-links {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
 
-        .nav-wrapper {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            height: 70px;
-        }
+    .nav-links a {
+      color: #E2E8F0;
+      text-decoration: none;
+      font-size: 0.9rem;
+      font-weight: 500;
+      padding: 0.6rem 0.8rem;
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      transition: all 0.2s ease;
+    }
 
-        .logo {
-            font-family: 'Merriweather', Georgia, serif;
-            font-size: 1.25rem;
-            font-weight: 700;
-            color: var(--navy-dark);
-            letter-spacing: -0.02em;
-        }
+    .nav-links a:hover {
+      background-color: rgba(255, 255, 255, 0.1);
+      color: var(--primary-blue);
+    }
 
-        .logo span {
-            color: var(--columbia-blue-dark);
-            font-weight: 400;
-            font-size: 0.95rem;
-            margin-left: 8px;
-        }
+    .sidebar-footer {
+      border-top: 1px solid rgba(255, 255, 255, 0.15);
+      padding-top: 1.2rem;
+      font-size: 0.8rem;
+      color: #A0AEC0;
+    }
 
-        nav ul {
-            display: flex;
-            list-style: none;
-            gap: 24px;
-        }
+    .sidebar-footer a {
+      color: var(--primary-blue);
+      text-decoration: none;
+    }
 
-        nav a {
-            font-size: 0.9rem;
-            font-weight: 500;
-            color: var(--slate-gray);
-            padding: 6px 0;
-            position: relative;
-        }
+    /* Main Content */
+    .main-content {
+      margin-left: var(--sidebar-width);
+      flex: 1;
+      padding: 3rem 4rem;
+      max-width: 1100px;
+    }
 
-        nav a:hover, nav a.active {
-            color: var(--navy-primary);
-        }
+    section {
+      margin-bottom: 3.5rem;
+      scroll-margin-top: 2rem;
+    }
 
-        nav a::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 0%;
-            height: 2px;
-            background-color: var(--columbia-blue);
-            transition: var(--transition-fast);
-        }
+    .section-title {
+      font-family: 'Lora', serif;
+      font-size: 1.6rem;
+      font-weight: 600;
+      color: var(--primary-dark);
+      border-bottom: 2px solid var(--primary-blue);
+      padding-bottom: 0.4rem;
+      margin-bottom: 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
 
-        nav a:hover::after, nav a.active::after {
-            width: 100%;
-        }
+    /* Hero / Contact Card */
+    .hero-card {
+      background: linear-gradient(135deg, var(--primary-dark) 0%, #2B4C7E 100%);
+      color: white;
+      padding: 2.5rem;
+      border-radius: 12px;
+      margin-bottom: 3rem;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+    }
 
-        /* Hero / Contact Header */
-        .hero {
-            padding: 60px 0 40px;
-            background: linear-gradient(135deg, #F0F6FB 0%, #FFFFFF 100%);
-            border-bottom: 1px solid var(--border-color);
-        }
+    .hero-card h2 {
+      font-family: 'Lora', serif;
+      font-size: 2.2rem;
+      margin-bottom: 0.5rem;
+    }
 
-        .hero-grid {
-            display: grid;
-            grid-template-columns: 2fr 1fr;
-            gap: 40px;
-            align-items: center;
-        }
+    .hero-card .title {
+      font-size: 1.1rem;
+      color: var(--primary-blue);
+      font-weight: 500;
+      margin-bottom: 1.5rem;
+    }
 
-        .hero-title h1 {
-            font-size: 2.5rem;
-            line-height: 1.2;
-            margin-bottom: 8px;
-            color: var(--navy-dark);
-        }
+    .contact-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1rem;
+      font-size: 0.9rem;
+      background: rgba(255, 255, 255, 0.08);
+      padding: 1.2rem;
+      border-radius: 8px;
+    }
 
-        .hero-subtitle {
-            font-size: 1.2rem;
-            color: var(--navy-primary);
-            font-weight: 500;
-            margin-bottom: 16px;
-        }
+    .contact-item {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
 
-        .hero-bio {
-            font-size: 1rem;
-            color: var(--slate-gray);
-            margin-bottom: 24px;
-            max-width: 650px;
-        }
+    .contact-item a {
+      color: white;
+      text-decoration: none;
+    }
 
-        .contact-card {
-            background: white;
-            border-radius: 12px;
-            padding: 24px;
-            box-shadow: var(--card-shadow);
-            border: 1px solid var(--border-color);
-            border-top: 4px solid var(--columbia-blue);
-        }
+    .contact-item a:hover {
+      text-decoration: underline;
+    }
 
-        .contact-card h3 {
-            font-size: 1rem;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-            color: var(--slate-gray);
-            margin-bottom: 16px;
-            font-family: 'Inter', sans-serif;
-        }
+    /* Employment Cards */
+    .timeline {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
 
-        .contact-item {
-            display: flex;
-            align-items: flex-start;
-            gap: 12px;
-            margin-bottom: 12px;
-            font-size: 0.92rem;
-        }
+    .timeline-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border-color);
+      border-left: 4px solid var(--primary-accent);
+      padding: 1.2rem 1.5rem;
+      border-radius: 6px;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+    }
 
-        .contact-item svg {
-            width: 18px;
-            height: 18px;
-            fill: none;
-            stroke: var(--columbia-blue-dark);
-            stroke-width: 2;
-            stroke-linecap: round;
-            stroke-linejoin: round;
-            flex-shrink: 0;
-            margin-top: 3px;
-        }
+    .timeline-card .role {
+      font-weight: 600;
+      font-size: 1.05rem;
+      color: var(--primary-dark);
+    }
 
-        .updated-tag {
-            display: inline-block;
-            background-color: var(--columbia-blue-light);
-            color: var(--navy-primary);
-            font-size: 0.75rem;
-            font-weight: 600;
-            padding: 4px 10px;
-            border-radius: 20px;
-            margin-top: 10px;
-        }
+    .timeline-card .institution {
+      color: var(--text-muted);
+      font-size: 0.9rem;
+    }
 
-        /* Section Layout */
-        section {
-            padding: 50px 0;
-            border-bottom: 1px solid var(--border-color);
-        }
+    .timeline-card .year {
+      background-color: var(--highlight-bg);
+      color: var(--primary-accent);
+      font-weight: 600;
+      font-size: 0.85rem;
+      padding: 0.3rem 0.8rem;
+      border-radius: 20px;
+      white-space: nowrap;
+    }
 
-        section:nth-child(even) {
-            background-color: #FFFFFF;
-        }
+    /* Education Grid */
+    .education-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.2rem;
+    }
 
-        .section-header {
-            margin-bottom: 32px;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
+    .edu-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border-color);
+      padding: 1.2rem;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+    }
 
-        .section-header h2 {
-            font-size: 1.75rem;
-            color: var(--navy-dark);
-            position: relative;
-        }
+    .edu-card .degree {
+      font-weight: 600;
+      color: var(--primary-dark);
+      margin-bottom: 0.3rem;
+    }
 
-        .section-header .accent-line {
-            height: 3px;
-            flex-grow: 1;
-            background: linear-gradient(to right, var(--columbia-blue), rgba(108, 172, 226, 0.1));
-            border-radius: 2px;
-            max-width: 120px;
-        }
+    .edu-card .school {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+    }
 
-        /* Employment & Education Timeline / Tiles */
-        .grid-2col {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 24px;
-        }
+    .edu-card .year {
+      font-size: 0.8rem;
+      color: var(--primary-accent);
+      font-weight: 600;
+      margin-top: 0.5rem;
+    }
 
-        .timeline-card {
-            background: white;
-            border: 1px solid var(--border-color);
-            border-radius: 10px;
-            padding: 20px 24px;
-            box-shadow: var(--card-shadow);
-            transition: var(--transition-fast);
-            position: relative;
-        }
+    /* Research Tags */
+    .tag-cloud {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.6rem;
+    }
 
-        .timeline-card:hover {
-            box-shadow: var(--card-shadow-hover);
-            transform: translateY(-2px);
-        }
+    .tag {
+      background-color: var(--highlight-bg);
+      color: var(--primary-dark);
+      padding: 0.5rem 1rem;
+      border-radius: 20px;
+      font-size: 0.9rem;
+      font-weight: 500;
+      border: 1px solid rgba(117, 170, 219, 0.3);
+    }
 
-        .timeline-badge {
-            display: inline-block;
-            background-color: var(--columbia-blue-light);
-            color: var(--navy-primary);
-            font-size: 0.8rem;
-            font-weight: 600;
-            padding: 2px 8px;
-            border-radius: 4px;
-            margin-bottom: 8px;
-        }
+    /* Honors List */
+    .honors-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
 
-        .timeline-title {
-            font-size: 1.1rem;
-            font-weight: 700;
-            color: var(--navy-dark);
-            margin-bottom: 4px;
-            font-family: 'Merriweather', serif;
-        }
+    .honors-list li {
+      background: var(--card-bg);
+      border: 1px solid var(--border-color);
+      padding: 0.9rem 1.2rem;
+      border-radius: 6px;
+      font-size: 0.92rem;
+      display: flex;
+      align-items: flex-start;
+      gap: 0.8rem;
+    }
 
-        .timeline-sub {
-            font-size: 0.95rem;
-            color: var(--slate-gray);
-        }
+    .honors-list li i {
+      color: var(--primary-blue);
+      margin-top: 0.2rem;
+    }
 
-        /* Research Interests Tiles */
-        .tags-container {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 12px;
-        }
+    /* Professional Activities */
+    .activity-group {
+      background: var(--card-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      padding: 1.5rem;
+      margin-bottom: 1rem;
+    }
 
-        .tag-card {
-            background-color: white;
-            border: 1px solid var(--border-color);
-            border-left: 4px solid var(--columbia-blue);
-            padding: 14px 20px;
-            border-radius: 8px;
-            font-weight: 600;
-            color: var(--navy-dark);
-            box-shadow: var(--card-shadow);
-            flex: 1 1 calc(33.333% - 12px);
-            min-width: 200px;
-            display: flex;
-            align-items: center;
-        }
+    .activity-group h3 {
+      font-size: 1.1rem;
+      color: var(--primary-dark);
+      margin-bottom: 1rem;
+      border-bottom: 1px solid var(--border-color);
+      padding-bottom: 0.5rem;
+    }
 
-        /* Honors & Awards List */
-        .honors-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
-            gap: 16px;
-        }
+    /* Publications */
+    .pub-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border-color);
+      padding: 1.2rem;
+      border-radius: 8px;
+      margin-bottom: 1rem;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
 
-        .honor-card {
-            background: white;
-            padding: 16px 20px;
-            border-radius: 8px;
-            border: 1px solid var(--border-color);
-            box-shadow: var(--card-shadow);
-            font-size: 0.92rem;
-            line-height: 1.5;
-            display: flex;
-            gap: 12px;
-            align-items: flex-start;
-        }
+    .pub-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    }
 
-        .honor-card .award-icon {
-            color: var(--columbia-blue-dark);
-            font-weight: bold;
-            font-size: 1.1rem;
-            line-height: 1;
-            margin-top: 2px;
-        }
+    .pub-authors {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      margin-bottom: 0.3rem;
+    }
 
-        /* Publications Search & Filter Bar */
-        .filter-container {
-            margin-bottom: 24px;
-            display: flex;
-            gap: 12px;
-            flex-wrap: wrap;
-            align-items: center;
-        }
+    .pub-title {
+      font-weight: 600;
+      font-size: 1.02rem;
+      color: var(--primary-dark);
+      margin-bottom: 0.4rem;
+    }
 
-        .filter-btn {
-            background: white;
-            border: 1px solid var(--border-color);
-            padding: 8px 16px;
-            border-radius: 20px;
-            font-size: 0.85rem;
-            font-weight: 500;
-            cursor: pointer;
-            transition: var(--transition-fast);
-            color: var(--slate-gray);
-        }
+    .pub-journal {
+      font-style: italic;
+      font-size: 0.9rem;
+      color: var(--primary-accent);
+    }
 
-        .filter-btn:hover, .filter-btn.active {
-            background-color: var(--columbia-blue);
-            color: white;
-            border-color: var(--columbia-blue);
-        }
+    .badge-winner {
+      display: inline-block;
+      background-color: #DEF7EC;
+      color: #03543F;
+      font-size: 0.78rem;
+      font-weight: 600;
+      padding: 0.2rem 0.6rem;
+      border-radius: 4px;
+      margin-top: 0.5rem;
+      margin-right: 0.4rem;
+    }
 
-        .search-box {
-            padding: 8px 16px;
-            border: 1px solid var(--border-color);
-            border-radius: 20px;
-            font-size: 0.85rem;
-            width: 250px;
-            margin-left: auto;
-            outline: none;
-        }
+    .badge-finalist {
+      display: inline-block;
+      background-color: #FEF08A;
+      color: #713F12;
+      font-size: 0.78rem;
+      font-weight: 600;
+      padding: 0.2rem 0.6rem;
+      border-radius: 4px;
+      margin-top: 0.5rem;
+      margin-right: 0.4rem;
+    }
 
-        .search-box:focus {
-            border-color: var(--columbia-blue);
-        }
+    /* Disclosure Box */
+    .disclosure-box {
+      background-color: #F1F5F9;
+      border-left: 4px solid var(--primary-accent);
+      padding: 1.2rem;
+      border-radius: 4px;
+      font-size: 0.92rem;
+      color: var(--text-main);
+    }
 
-        /* Publication Entry */
-        .pub-item {
-            background: white;
-            border: 1px solid var(--border-color);
-            border-radius: 8px;
-            padding: 20px;
-            margin-bottom: 16px;
-            box-shadow: var(--card-shadow);
-            transition: var(--transition-fast);
-        }
-
-        .pub-item:hover {
-            border-color: var(--columbia-blue-mid);
-        }
-
-        .pub-title {
-            font-size: 1.05rem;
-            font-weight: 700;
-            color: var(--navy-dark);
-            margin-bottom: 6px;
-            font-family: 'Merriweather', Georgia, serif;
-            line-height: 1.4;
-        }
-
-        .pub-authors {
-            font-size: 0.9rem;
-            color: #475569;
-            margin-bottom: 4px;
-        }
-
-        .pub-venue {
-            font-size: 0.9rem;
-            font-style: italic;
-            color: var(--navy-primary);
-            font-weight: 500;
-        }
-
-        .pub-awards {
-            margin-top: 10px;
-            padding-top: 10px;
-            border-top: 1px dashed var(--border-color);
-            display: flex;
-            flex-wrap: wrap;
-            gap: 6px;
-        }
-
-        .award-badge {
-            background-color: #FEF3C7;
-            color: #92400E;
-            font-size: 0.75rem;
-            font-weight: 600;
-            padding: 3px 8px;
-            border-radius: 4px;
-            display: inline-flex;
-            align-items: center;
-            gap: 4px;
-        }
-
-        /* Activities & Service */
-        .activity-group {
-            margin-bottom: 24px;
-        }
-
-        .activity-group h3 {
-            font-size: 1.1rem;
-            margin-bottom: 12px;
-            color: var(--navy-primary);
-            font-family: 'Inter', sans-serif;
-            border-bottom: 2px solid var(--columbia-blue-light);
-            padding-bottom: 4px;
-        }
-
-        .activity-list {
-            list-style: none;
-        }
-
-        .activity-list li {
-            position: relative;
-            padding-left: 20px;
-            margin-bottom: 8px;
-            font-size: 0.95rem;
-        }
-
-        .activity-list li::before {
-            content: "•";
-            position: absolute;
-            left: 0;
-            color: var(--columbia-blue);
-            font-weight: bold;
-            font-size: 1.2rem;
-            line-height: 1;
-        }
-
-        .outside-activities-box {
-            background-color: var(--columbia-blue-light);
-            border: 1px solid var(--columbia-blue-mid);
-            border-radius: 8px;
-            padding: 20px;
-            font-size: 0.92rem;
-            color: #1E293B;
-            line-height: 1.6;
-        }
-
-        /* Footer */
-        footer {
-            background-color: var(--navy-dark);
-            color: #94A3B8;
-            padding: 40px 0;
-            text-align: center;
-            font-size: 0.88rem;
-        }
-
-        footer a {
-            color: var(--columbia-blue);
-        }
-
-        /* Responsive Design */
-        @media (max-width: 868px) {
-            .hero-grid {
-                grid-template-columns: 1fr;
-            }
-            .grid-2col {
-                grid-template-columns: 1fr;
-            }
-            .nav-wrapper {
-                flex-direction: column;
-                height: auto;
-                padding: 16px 0;
-                gap: 12px;
-            }
-            nav ul {
-                gap: 12px;
-                flex-wrap: wrap;
-                justify-content: center;
-            }
-            .search-box {
-                width: 100%;
-                margin-left: 0;
-            }
-            .honors-grid {
-                grid-template-columns: 1fr;
-            }
-        }
-    </style>
+    /* Mobile Adaptability */
+    @media (max-width: 900px) {
+      body {
+        flex-direction: column;
+      }
+      .sidebar {
+        width: 100%;
+        position: relative;
+        height: auto;
+      }
+      .main-content {
+        margin-left: 0;
+        padding: 2rem 1.5rem;
+      }
+    }
+  </style>
 </head>
 <body>
 
-    <!-- Navigation Header -->
-    <header>
-        <div class="container nav-wrapper">
-            <a href="#" class="logo">Olivier Toubia <span>Columbia Business School</span></a>
-            <nav>
-                <ul>
-                    <li><a href="#employment">Employment</a></li>
-                    <li><a href="#education">Education</a></li>
-                    <li><a href="#interests">Research</a></li>
-                    <li><a href="#honors">Honors</a></li>
-                    <li><a href="#activity">Professional Activity</a></li>
-                    <li><a href="#publications">Publications</a></li>
-                    <li><a href="#outside">Outside Activities</a></li>
-                </ul>
-            </nav>
-        </div>
-    </header>
-
-    <!-- Main Content Header / Contact -->
-    <div class="hero">
-        <div class="container hero-grid">
-            <div class="hero-title">
-                <h1>Olivier Toubia</h1>
-                <div class="hero-subtitle">Glaubinger Professor of Business | Senior Vice Dean for Curriculum and Instruction</div>
-                <div class="hero-bio">
-                    Faculty member at Columbia Business School specializing in innovation, idea generation, preference measurement, computational social science, and generative AI.
-                </div>
-            </div>
-            <div class="contact-card">
-                <h3>Contact & Info</h3>
-                <div class="contact-item">
-                    <svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
-                    <div>
-                        Henry R. Kravis Hall, Room 925<br>
-                        Columbia Business School<br>
-                        665 W 130th Street, New York, NY 10027
-                    </div>
-                </div>
-                <div class="contact-item">
-                    <svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
-                    <div>(212) 854 8243</div>
-                </div>
-                <div class="contact-item">
-                    <svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
-                    <div><a href="mailto:ot2107@gsb.columbia.edu">ot2107@gsb.columbia.edu</a></div>
-                </div>
-                <div class="contact-item">
-                    <svg viewBox="0 0 24 24"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg>
-                    <div><a href="https://www.linkedin.com/in/olivier-toubia-47273b4/" target="_blank">LinkedIn Profile</a></div>
-                </div>
-                <div class="updated-tag">Updated: 07/24/2026</div>
-            </div>
-        </div>
+  <!-- Navigation Bar -->
+  <nav class="sidebar">
+    <div>
+      <div class="profile-header">
+        <h1>Olivier Toubia</h1>
+        <p>Columbia Business School</p>
+      </div>
+      <ul class="nav-links">
+        <li><a href="#about"><i class="fa-solid fa-user"></i> About</a></li>
+        <li><a href="#employment"><i class="fa-solid fa-briefcase"></i> Employment</a></li>
+        <li><a href="#education"><i class="fa-solid fa-graduation-cap"></i> Education</a></li>
+        <li><a href="#interests"><i class="fa-solid fa-lightbulb"></i> Research Interests</a></li>
+        <li><a href="#honors"><i class="fa-solid fa-award"></i> Honors & Awards</a></li>
+        <li><a href="#activity"><i class="fa-solid fa-tasks"></i> Professional Activity</a></li>
+        <li><a href="#publications"><i class="fa-solid fa-book"></i> Publications</a></li>
+        <li><a href="#books"><i class="fa-solid fa-book-open"></i> Chapters & Books</a></li>
+        <li><a href="#outside"><i class="fa-solid fa-scale-balanced"></i> Outside Activities</a></li>
+      </ul>
     </div>
+    <div class="sidebar-footer">
+      <p><a href="https://www.linkedin.com/in/olivier-toubia-47273b4/" target="_blank"><i class="fa-brands fa-linkedin"></i> LinkedIn Profile</a></p>
+      <p style="margin-top: 0.4rem;">CV Updated: July 2026</p>
+    </div>
+  </nav>
 
-    <!-- EMPLOYMENT SECTION -->
+  <!-- Main Body Content -->
+  <main class="main-content">
+
+    <!-- About Section -->
+    <section id="about">
+      <div class="hero-card">
+        <h2>Olivier Toubia</h2>
+        <p class="title">Glaubinger Professor of Business | Senior Vice Dean for Curriculum and Instruction</p>
+        <div class="contact-grid">
+          <div class="contact-item">
+            <i class="fa-solid fa-building"></i>
+            <span>Henry R. Kravis Hall, Room 925</span>
+          </div>
+          <div class="contact-item">
+            <i class="fa-solid fa-location-dot"></i>
+            <span>665 W 130th Street, NY 10027</span>
+          </div>
+          <div class="contact-item">
+            <i class="fa-solid fa-phone"></i>
+            <span>(212) 854-8243</span>
+          </div>
+          <div class="contact-item">
+            <i class="fa-solid fa-envelope"></i>
+            <a href="mailto:ot2107@gsb.columbia.edu">ot2107@gsb.columbia.edu</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Employment Section -->
     <section id="employment">
-        <div class="container">
-            <div class="section-header">
-                <h2>Employment</h2>
-                <div class="accent-line"></div>
-            </div>
-            <div class="grid-2col">
-                <div class="timeline-card">
-                    <span class="timeline-badge">2012 – Present</span>
-                    <div class="timeline-title">Glaubinger Professor of Business</div>
-                    <div class="timeline-sub">Columbia Business School, New York, NY</div>
-                </div>
-                <div class="timeline-card">
-                    <span class="timeline-badge">2011 – 2012</span>
-                    <div class="timeline-title">Professor of Marketing</div>
-                    <div class="timeline-sub">Columbia Business School, New York, NY</div>
-                </div>
-                <div class="timeline-card">
-                    <span class="timeline-badge">2010 – 2011</span>
-                    <div class="timeline-title">Associate Professor of Marketing (with Tenure)</div>
-                    <div class="timeline-sub">Columbia Business School, New York, NY</div>
-                </div>
-                <div class="timeline-card">
-                    <span class="timeline-badge">2007 – 2010</span>
-                    <div class="timeline-title">David W. Zalaznick Associate Professor of Business (without Tenure)</div>
-                    <div class="timeline-sub">Columbia Business School, New York, NY</div>
-                </div>
-                <div class="timeline-card">
-                    <span class="timeline-badge">2004 – 2007</span>
-                    <div class="timeline-title">Assistant Professor of Marketing</div>
-                    <div class="timeline-sub">Columbia Business School, New York, NY</div>
-                </div>
-            </div>
+      <h2 class="section-title"><i class="fa-solid fa-briefcase"></i> Academic Employment</h2>
+      <div class="timeline">
+        <div class="timeline-card">
+          <div>
+            <div class="role">Glaubinger Professor of Business</div>
+            <div class="institution">Columbia Business School, New York, NY</div>
+          </div>
+          <span class="year">2012 – Present</span>
         </div>
+        <div class="timeline-card">
+          <div>
+            <div class="role">Professor of Marketing</div>
+            <div class="institution">Columbia Business School, New York, NY</div>
+          </div>
+          <span class="year">2011 – 2012</span>
+        </div>
+        <div class="timeline-card">
+          <div>
+            <div class="role">Associate Professor of Marketing (with Tenure)</div>
+            <div class="institution">Columbia Business School, New York, NY</div>
+          </div>
+          <span class="year">2010 – 2011</span>
+        </div>
+        <div class="timeline-card">
+          <div>
+            <div class="role">David W. Zalaznick Associate Professor of Business (without Tenure)</div>
+            <div class="institution">Columbia Business School, New York, NY</div>
+          </div>
+          <span class="year">2007 – 2010</span>
+        </div>
+        <div class="timeline-card">
+          <div>
+            <div class="role">Assistant Professor of Marketing</div>
+            <div class="institution">Columbia Business School, New York, NY</div>
+          </div>
+          <span class="year">2004 – 2007</span>
+        </div>
+      </div>
     </section>
 
-    <!-- EDUCATION SECTION -->
+    <!-- Education Section -->
     <section id="education">
-        <div class="container">
-            <div class="section-header">
-                <h2>Education</h2>
-                <div class="accent-line"></div>
-            </div>
-            <div class="grid-2col">
-                <div class="timeline-card">
-                    <span class="timeline-badge">June 2004</span>
-                    <div class="timeline-title">Ph.D. in Marketing</div>
-                    <div class="timeline-sub">Massachusetts Institute of Technology, Sloan School of Management, Cambridge, MA</div>
-                </div>
-                <div class="timeline-card">
-                    <span class="timeline-badge">January 2001</span>
-                    <div class="timeline-title">S.M. in Operations Research</div>
-                    <div class="timeline-sub">Massachusetts Institute of Technology, Cambridge, MA</div>
-                </div>
-                <div class="timeline-card">
-                    <span class="timeline-badge">June 2000</span>
-                    <div class="timeline-title">Ingénieur</div>
-                    <div class="timeline-sub">Ecole Centrale Paris, Paris, France</div>
-                </div>
-            </div>
+      <h2 class="section-title"><i class="fa-solid fa-graduation-cap"></i> Education</h2>
+      <div class="education-grid">
+        <div class="edu-card">
+          <div class="degree">Ph.D. in Marketing</div>
+          <div class="school">MIT Sloan School of Management, Cambridge, MA</div>
+          <div class="year">June 2004</div>
         </div>
+        <div class="edu-card">
+          <div class="degree">S.M. in Operations Research</div>
+          <div class="school">Massachusetts Institute of Technology, Cambridge, MA</div>
+          <div class="year">January 2001</div>
+        </div>
+        <div class="edu-card">
+          <div class="degree">Ingénieur</div>
+          <div class="school">Ecole Centrale Paris, Paris, France</div>
+          <div class="year">June 2000</div>
+        </div>
+      </div>
     </section>
 
-    <!-- RESEARCH INTERESTS SECTION -->
+    <!-- Research Interests Section -->
     <section id="interests">
-        <div class="container">
-            <div class="section-header">
-                <h2>Research Interests</h2>
-                <div class="accent-line"></div>
-            </div>
-            <div class="tags-container">
-                <div class="tag-card">Innovation</div>
-                <div class="tag-card">Idea Generation</div>
-                <div class="tag-card">Creativity</div>
-                <div class="tag-card">Preference Measurement</div>
-                <div class="tag-card">Computational Social Science</div>
-                <div class="tag-card">Generative AI</div>
-            </div>
-        </div>
+      <h2 class="section-title"><i class="fa-solid fa-lightbulb"></i> Research Interests</h2>
+      <div class="tag-cloud">
+        <span class="tag">Innovation</span>
+        <span class="tag">Idea Generation</span>
+        <span class="tag">Creativity</span>
+        <span class="tag">Preference Measurement</span>
+        <span class="tag">Computational Social Science</span>
+        <span class="tag">Generative AI</span>
+      </div>
     </section>
 
-    <!-- HONORS AND AWARDS SECTION -->
+    <!-- Honors & Awards Section -->
     <section id="honors">
-        <div class="container">
-            <div class="section-header">
-                <h2>Honors and Awards</h2>
-                <div class="accent-line"></div>
-            </div>
-            <div class="honors-grid">
-                <div class="honor-card">
-                    <div class="award-icon">🏆</div>
-                    <div>Recipient of the John Little award for best marketing paper published in Marketing Science or Management Science (2003, 2006, 2017, 2018).</div>
-                </div>
-                <div class="honor-card">
-                    <div class="award-icon">🏆</div>
-                    <div>Recipient of the Don Morrison Long Term Impact Award (2022).</div>
-                </div>
-                <div class="honor-card">
-                    <div class="award-icon">🏆</div>
-                    <div>Recipient of the INFORMS Society for Marketing Science Long Term Impact Award (2016).</div>
-                </div>
-                <div class="honor-card">
-                    <div class="award-icon">🏆</div>
-                    <div>Recipient of the Paul E. Green award for the Journal of Marketing Research paper having the greatest potential for significant impact for marketing practice (2015).</div>
-                </div>
-                <div class="honor-card">
-                    <div class="award-icon">🏆</div>
-                    <div>Recipient of the Don Lehmann award (best dissertation-based paper published in JMR or JM) (2012).</div>
-                </div>
-                <div class="honor-card">
-                    <div class="award-icon">🏆</div>
-                    <div>Recipient of the Frank M. Bass outstanding dissertation award (2005).</div>
-                </div>
-                <div class="honor-card">
-                    <div class="award-icon">🏆</div>
-                    <div>Recipient of the John A. Howard AMA dissertation award (2005).</div>
-                </div>
-                <div class="honor-card">
-                    <div class="award-icon">🎗️</div>
-                    <div>Finalist for the John Little award for best marketing paper published in Marketing Science or Management Science (2013, 2022).</div>
-                </div>
-                <div class="honor-card">
-                    <div class="award-icon">🎗️</div>
-                    <div>Finalist for the Paul Green Award (2004, 2010).</div>
-                </div>
-                <div class="honor-card">
-                    <div class="award-icon">🎗️</div>
-                    <div>Finalist for the INFORMS Society for Marketing Science Long Term Impact Award (2011, 2012, 2013, 2014, 2015).</div>
-                </div>
-                <div class="honor-card">
-                    <div class="award-icon">🎗️</div>
-                    <div>Finalist for the Don Morrison Long Term Impact Award (2025).</div>
-                </div>
-                <div class="honor-card">
-                    <div class="award-icon">🎗️</div>
-                    <div>Finalist for the William F. O’Dell Award (2015).</div>
-                </div>
-                <div class="honor-card">
-                    <div class="award-icon">🎗️</div>
-                    <div>Finalist for the Exeter Prize for Research in Experimental Economics, Decision Theory and Behavioral Economics (2020).</div>
-                </div>
-                <div class="honor-card">
-                    <div class="award-icon">🎓</div>
-                    <div>Haring Symposium Distinguished Scholar (2013).</div>
-                </div>
-                <div class="honor-card">
-                    <div class="award-icon">📜</div>
-                    <div>Management Science Meritorious Service Award (2010).</div>
-                </div>
-                <div class="honor-card">
-                    <div class="award-icon">💡</div>
-                    <div>MSI Young Scholar (2007).</div>
-                </div>
-                <div class="honor-card">
-                    <div class="award-icon">🏛️</div>
-                    <div>Presidential Fellow, Massachusetts Institute of Technology (2001-2004).</div>
-                </div>
-                <div class="honor-card">
-                    <div class="award-icon">🇫🇷</div>
-                    <div>Recipient of the Jean Walter Zellidja Fellowship (Académie Française) (1999).</div>
-                </div>
-                <div class="honor-card">
-                    <div class="award-icon">🎖️</div>
-                    <div>Recipient of the Jean Gaillard Memorial Fellowship (1999).</div>
-                </div>
-            </div>
-        </div>
+      <h2 class="section-title"><i class="fa-solid fa-award"></i> Honors and Awards</h2>
+      <ul class="honors-list">
+        <li><i class="fa-solid fa-trophy"></i> <div><strong>John Little Award Winner:</strong> Best marketing paper published in Marketing Science or Management Science (2003, 2006, 2017, 2018).</div></li>
+        <li><i class="fa-solid fa-award"></i> <div><strong>Don Morrison Long Term Impact Award Winner:</strong> 2022.</div></li>
+        <li><i class="fa-solid fa-award"></i> <div><strong>INFORMS Society for Marketing Science Long Term Impact Award Winner:</strong> 2016.</div></li>
+        <li><i class="fa-solid fa-certificate"></i> <div><strong>Paul E. Green Award Winner:</strong> Journal of Marketing Research paper having the greatest potential for significant impact for marketing practice (2015).</div></li>
+        <li><i class="fa-solid fa-medal"></i> <div><strong>Don Lehmann Award Winner:</strong> Best dissertation-based paper published in JMR or JM (2012).</div></li>
+        <li><i class="fa-solid fa-graduation-cap"></i> <div><strong>Dissertation Awards:</strong> Frank M. Bass Outstanding Dissertation Award (2005); John A. Howard AMA Dissertation Award (2005).</div></li>
+        <li><i class="fa-solid fa-star"></i> <div><strong>John Little Award Finalist:</strong> 2013, 2022.</div></li>
+        <li><i class="fa-solid fa-star"></i> <div><strong>Paul Green Award Finalist:</strong> 2004, 2010.</div></li>
+        <li><i class="fa-solid fa-star"></i> <div><strong>INFORMS ISMS Long Term Impact Award Finalist:</strong> 2011, 2012, 2013, 2014, 2015.</div></li>
+        <li><i class="fa-solid fa-star"></i> <div><strong>Don Morrison Long Term Impact Award Finalist:</strong> 2025.</div></li>
+        <li><i class="fa-solid fa-star"></i> <div><strong>William F. O’Dell Award Finalist:</strong> 2015.</div></li>
+        <li><i class="fa-solid fa-star"></i> <div><strong>Exeter Prize Finalist:</strong> Research in Experimental Economics, Decision Theory and Behavioral Economics (2020).</div></li>
+        <li><i class="fa-solid fa-bookmark"></i> <div><strong>Additional Recognition:</strong> Haring Symposium Distinguished Scholar (2013); Management Science Meritorious Service Award (2010); MSI Young Scholar (2007); Presidential Fellow, MIT (2001-2004); Jean Walter Zellidja Fellowship, Académie Française (1999); Jean Gaillard Memorial Fellowship (1999).</div></li>
+      </ul>
     </section>
 
-    <!-- PROFESSIONAL ACTIVITY SECTION -->
+    <!-- Professional Activity Section -->
     <section id="activity">
-        <div class="container">
-            <div class="section-header">
-                <h2>Professional Activity</h2>
-                <div class="accent-line"></div>
-            </div>
-            
-            <div class="activity-group">
-                <h3>Leadership & Administrative Appointments</h3>
-                <ul class="activity-list">
-                    <li><strong>2026–present:</strong> Senior Vice Dean for Curriculum and Instruction, Columbia Business School.</li>
-                    <li><strong>2019–2022:</strong> Chair of Marketing Division, Columbia Business School.</li>
-                    <li><strong>2019–2022:</strong> Member of the Tenure Review Advisory Committee (TRAC), Columbia University.</li>
-                    <li><strong>2016–2019:</strong> Faculty Director, The Eugene Lang Center for Entrepreneurship, Columbia Business School.</li>
-                    <li><strong>2016–2018:</strong> VP Education, INFORMS Society for Marketing Science (ISMS).</li>
-                </ul>
-            </div>
+      <h2 class="section-title"><i class="fa-solid fa-tasks"></i> Professional Activity</h2>
+      
+      <div class="activity-group">
+        <h3>Administrative & Leadership Roles</h3>
+        <ul style="list-style-type: square; padding-left: 1.2rem; line-height: 1.8;">
+          <li><strong>2026–present:</strong> Senior Vice Dean for Curriculum and Instruction, Columbia Business School.</li>
+          <li><strong>2019–2022:</strong> Chair of Marketing Division, Columbia Business School.</li>
+          <li><strong>2019–2022:</strong> Member of the Tenure Review Advisory Committee (TRAC), Columbia University.</li>
+          <li><strong>2016–2019:</strong> Faculty Director, The Eugene Lang Center for Entrepreneurship, Columbia Business School.</li>
+          <li><strong>2016–2018:</strong> VP Education, INFORMS Society for Marketing Science (ISMS).</li>
+        </ul>
+      </div>
 
-            <div class="activity-group">
-                <h3>Editorial & Journal Service</h3>
-                <ul class="activity-list">
-                    <li><strong>2025–present:</strong> Associate Editor, <em>Journal of Marketing</em>.</li>
-                    <li><strong>2025–present:</strong> Member of the Advisory Board, <em>Marketing Science</em>.</li>
-                    <li><strong>2022–2024:</strong> Editor-in-Chief, <em>Marketing Science</em>.</li>
-                    <li><strong>2019–2021:</strong> Senior Editor, <em>Marketing Science</em>.</li>
-                    <li><strong>2018:</strong> Co-Editor, <em>Quantitative Marketing and Economics</em>.</li>
-                    <li><strong>2013–2018:</strong> Senior Editor, <em>Customer Needs and Solutions</em>.</li>
-                    <li><strong>2016–2018:</strong> Associate Editor, <em>Marketing Science</em>.</li>
-                    <li><strong>2015–2017:</strong> Associate Editor, <em>Journal of Consumer Research</em>.</li>
-                    <li><strong>2014–2018:</strong> Associate Editor, <em>Management Science</em>.</li>
-                    <li><strong>2013–2015:</strong> Associate Editor, <em>International Journal of Research in Marketing</em>.</li>
-                    <li><strong>2010–2017:</strong> Associate Editor, <em>Operations Research</em>.</li>
-                    <li><strong>2010–2018:</strong> Member of the Editorial Board, <em>Journal of Marketing Research</em>.</li>
-                    <li><strong>2008–2018:</strong> Member of the Editorial Board, <em>International Journal of Research in Marketing</em>.</li>
-                    <li><strong>2006–2016:</strong> Member of the Editorial Board, <em>Marketing Science</em>.</li>
-                    <li><strong>2011–present:</strong> Member of the Scientific Committee, <em>Recherche et Applications en Marketing</em>.</li>
-                </ul>
-            </div>
+      <div class="activity-group">
+        <h3>Editorial Roles</h3>
+        <ul style="list-style-type: square; padding-left: 1.2rem; line-height: 1.8;">
+          <li><strong>2025–present:</strong> Associate Editor, <em>Journal of Marketing</em>.</li>
+          <li><strong>2025–present:</strong> Member of the Advisory Board, <em>Marketing Science</em>.</li>
+          <li><strong>2022–2024:</strong> Editor-in-Chief, <em>Marketing Science</em>.</li>
+          <li><strong>2019–2021:</strong> Senior Editor, <em>Marketing Science</em>.</li>
+          <li><strong>2018:</strong> Co-Editor, <em>Quantitative Marketing and Economics</em>.</li>
+          <li><strong>2013–2018:</strong> Senior Editor, <em>Customer Needs and Solutions</em>.</li>
+          <li><strong>2013–2015:</strong> Associate Editor, <em>International Journal of Research in Marketing</em>.</li>
+          <li><strong>2015–2017:</strong> Associate Editor, <em>Journal of Consumer Research</em>.</li>
+          <li><strong>2014–2018:</strong> Associate Editor, <em>Management Science</em>.</li>
+          <li><strong>2016–2018:</strong> Associate Editor, <em>Marketing Science</em>.</li>
+          <li><strong>2010–2017:</strong> Associate Editor, <em>Operations Research</em>.</li>
+          <li><strong>2008–2018:</strong> Member of Editorial Board, <em>International Journal of Research in Marketing</em>.</li>
+          <li><strong>2010–2018:</strong> Member of Editorial Board, <em>Journal of Marketing Research</em>.</li>
+          <li><strong>2006–2016:</strong> Member of Editorial Board, <em>Marketing Science</em>.</li>
+          <li><strong>2011–present:</strong> Member of the Scientific Committee, <em>Recherche et Applications en Marketing</em>.</li>
+        </ul>
+      </div>
 
-            <div class="activity-group">
-                <h3>Ad-hoc Reviewer</h3>
-                <p style="font-size: 0.92rem; color: var(--slate-gray); line-height: 1.6;">
-                    American Economic Review, Applied Stochastic Models in Business and Industry, California Management Review, Decision Support Systems, European Journal of Operations Research, European Research Council, Interfaces, International Journal of Product Development, Israeli Science Foundation, Journal of Behavioral Decision Making, Journal of Business and Economic Statistics, Machine Learning, Marketing Letters, National Science Foundation, Physica A, Proceedings of the National Academy of Sciences, Product and Operations Management, Psychometrika, Review of Marketing Science.
-                </p>
-            </div>
-        </div>
+      <div class="activity-group">
+        <h3>Ad-hoc Reviewer</h3>
+        <p style="font-size: 0.92rem; color: var(--text-main);">
+          American Economic Review, Applied Stochastic Models in Business and Industry, California Management Review, Decision Support Systems, European Journal of Operations Research, European Research Council, Interfaces, International Journal of Product Development, Israeli Science Foundation, Journal of Behavioral Decision Making, Journal of Business and Economic Statistics, Machine Learning, Marketing Letters, National Science Foundation, Physica A, Proceedings of the National Academy of Science, Product and Operation Management, Psychometrika, Review of Marketing Science.
+        </p>
+      </div>
     </section>
 
-    <!-- PUBLICATIONS SECTION -->
+    <!-- Peer-Reviewed Journal Publications -->
     <section id="publications">
-        <div class="container">
-            <div class="section-header">
-                <h2>Publications</h2>
-                <div class="accent-line"></div>
-            </div>
+      <h2 class="section-title"><i class="fa-solid fa-book"></i> Peer-Reviewed Journal Publications</h2>
 
-            <!-- Filter buttons -->
-            <div class="filter-container">
-                <button class="filter-btn active" onclick="filterPubs('all')">All Publications</button>
-                <button class="filter-btn" onclick="filterPubs('peer-reviewed')">Peer-Reviewed Journals</button>
-                <button class="filter-btn" onclick="filterPubs('books')">Books & Chapters</button>
-                <input type="text" id="pubSearch" class="search-box" placeholder="Search publications..." onkeyup="searchPubs()">
-            </div>
-
-            <div id="pub-list">
-                <!-- PEER-REVIEWED JOURNAL PUBLICATIONS -->
-                
-                <div class="pub-item category-peer-reviewed">
-                    <div class="pub-title">Fast Polyhedral Adaptive Conjoint Estimation</div>
-                    <div class="pub-authors">Olivier Toubia, Duncan I. Simester, John R. Hauser, and Ely Dahan</div>
-                    <div class="pub-venue">Marketing Science, 22(3) (lead article), 2003.</div>
-                    <div class="pub-awards">
-                        <span class="award-badge">Winner, 2003 John Little Award</span>
-                        <span class="award-badge">Winner, 2005 Frank M. Bass Award</span>
-                        <span class="award-badge">Finalist, 2011, 2012, 2013 ISMS Long Term Impact Award</span>
-                    </div>
-                </div>
-
-                <div class="pub-item category-peer-reviewed">
-                    <div class="pub-title">Polyhedral Methods for Adaptive Choice-Based Conjoint Analysis</div>
-                    <div class="pub-authors">Olivier Toubia, John R. Hauser, and Duncan I. Simester</div>
-                    <div class="pub-venue">Journal of Marketing Research, 16, 116-131, 2004.</div>
-                    <div class="pub-awards">
-                        <span class="award-badge">Finalist, 2004 Paul Green Award</span>
-                    </div>
-                </div>
-
-                <div class="pub-item category-peer-reviewed">
-                    <div class="pub-title">The Impact of Utility Balance and Endogeneity in Conjoint Analysis</div>
-                    <div class="pub-authors">John R. Hauser and Olivier Toubia (authors listed alphabetically)</div>
-                    <div class="pub-venue">Marketing Science, 24(3), 2005.</div>
-                </div>
-
-                <div class="pub-item category-peer-reviewed">
-                    <div class="pub-title">Idea Generation, Creativity, and Incentives</div>
-                    <div class="pub-authors">Olivier Toubia</div>
-                    <div class="pub-venue">Marketing Science, 25(5) (lead article), 2006.</div>
-                    <div class="pub-awards">
-                        <span class="award-badge">Winner, 2006 John Little Award</span>
-                        <span class="award-badge">Winner, 2016 ISMS Long Term Impact Award</span>
-                        <span class="award-badge">Finalist, 2013, 2014, 2015 ISMS Long Term Impact Award</span>
-                    </div>
-                </div>
-
-                <div class="pub-item category-peer-reviewed">
-                    <div class="pub-title">Adaptive Idea Screening Using Consumers</div>
-                    <div class="pub-authors">Olivier Toubia and Laurent Florès</div>
-                    <div class="pub-venue">Marketing Science, 26(3), 342-361, 2007.</div>
-                </div>
-
-                <div class="pub-item category-peer-reviewed">
-                    <div class="pub-title">Probabilistic Polyhedral Methods for Adaptive Choice-Based Conjoint Analysis: Theory and Application</div>
-                    <div class="pub-authors">Olivier Toubia, John R. Hauser, and Rosanna Garcia</div>
-                    <div class="pub-venue">Marketing Science, 26(5) (lead article), 2007.</div>
-                    <div class="pub-awards">
-                        <span class="award-badge">Winner, 2005 John A. Howard AMA Dissertation Award</span>
-                    </div>
-                </div>
-
-                <div class="pub-item category-peer-reviewed">
-                    <div class="pub-title">On Managerial Efficiency for Experimental Designs</div>
-                    <div class="pub-authors">Olivier Toubia and John R. Hauser</div>
-                    <div class="pub-venue">Marketing Science, 26(6), 2007.</div>
-                </div>
-
-                <div class="pub-item category-peer-reviewed">
-                    <div class="pub-title">A Convex Optimization Approach to Modeling Consumer Heterogeneity in Conjoint Estimation</div>
-                    <div class="pub-authors">Theodoros Evgeniou, Massimilano Pontil, and Olivier Toubia (authors listed alphabetically)</div>
-                    <div class="pub-venue">Marketing Science, 26(6), 2007.</div>
-                </div>
-
-                <div class="pub-item category-peer-reviewed">
-                    <div class="pub-title">Eliciting Consumer Preferences using Robust Adaptive Choice Questionnaires</div>
-                    <div class="pub-authors">Jacob Abernethy, Theodoros Evgeniou, Olivier Toubia, and Jean-Philippe Vert (authors listed alphabetically)</div>
-                    <div class="pub-venue">IEEE Transactions on Knowledge and Data Engineering, 20(2) (lead article), 2008.</div>
-                </div>
-
-                <div class="pub-item category-peer-reviewed">
-                    <div class="pub-title">Beyond Conjoint Analysis: Advances in Preference Measurement</div>
-                    <div class="pub-authors">Oded Netzer, Olivier Toubia, Eric T. Bradlow, Ely Dahan, Theodoros Evgeniou, Fred M. Feinberg, Eleanor M. Feit, Sam K. Hui, Joseph Johnson, John C. Liechty, James B. Orlin, and Vithala R. Rao</div>
-                    <div class="pub-venue">Marketing Letters, 19(3), 2008.</div>
-                </div>
-
-                <div class="pub-item category-peer-reviewed">
-                    <div class="pub-title">The Silver Lining Effect: Formal Analysis and Experiments</div>
-                    <div class="pub-authors">Peter Jarnebrant, Olivier Toubia, and Eric Johnson</div>
-                    <div class="pub-venue">Management Science, 55(11), 2009.</div>
-                </div>
-
-                <div class="pub-item category-peer-reviewed">
-                    <div class="pub-title">Explaining the Power-Law Degree Distribution in a Social Commerce Network</div>
-                    <div class="pub-authors">Andrew Stephen and Olivier Toubia</div>
-                    <div class="pub-venue">Social Networks, 31, 262-270, 2009.</div>
-                </div>
-
-                <div class="pub-item category-peer-reviewed">
-                    <div class="pub-title">Marketing and Innovation Management: An Integrated Perspective</div>
-                    <div class="pub-authors">Elie Ofek and Olivier Toubia</div>
-                    <div class="pub-venue">Foundations and Trends in Marketing, 4(2), 77-128, 2009.</div>
-                </div>
-
-                <div class="pub-item category-peer-reviewed">
-                    <div class="pub-title">Deriving Value from Social Commerce Networks</div>
-                    <div class="pub-authors">Andrew Stephen and Olivier Toubia</div>
-                    <div class="pub-venue">Journal of Marketing Research, 47(2), 215-228, 2010.</div>
-                    <div class="pub-awards">
-                        <span class="award-badge">Winner, 2010 Don Lehmann Award</span>
-                        <span class="award-badge">Finalist, 2010 Paul Green Award</span>
-                        <span class="award-badge">Finalist, 2015 William F. O’Dell Award</span>
-                    </div>
-                </div>
-
-                <div class="pub-item category-peer-reviewed">
-                    <div class="pub-title">Disjunctions of Conjunctions, Cognitive Complexity, and Consideration Sets</div>
-                    <div class="pub-authors">John Hauser, Olivier Toubia, Theodoros Evgeniou, Rene Befurt, and Daria Dzyabura</div>
-                    <div class="pub-venue">Journal of Marketing Research, 47(3), 485-496, 2010.</div>
-                </div>
-
-                <div class="pub-item category-peer-reviewed">
-                    <div class="pub-title">Measuring Consumer Preferences Using Conjoint Poker</div>
-                    <div class="pub-authors">Olivier Toubia, Martijn G. de Jong, Daniel Stieger, and Johann Fueller</div>
-                    <div class="pub-venue">Marketing Science, 31(1), 138-156, 2012.</div>
-                </div>
-
-                <div class="pub-item category-peer-reviewed">
-                    <div class="pub-title">Dynamic Experiments for Estimating Preferences: An Adaptive Method of Eliciting Time and Risk Parameters</div>
-                    <div class="pub-authors">Olivier Toubia, Eric Johnson, Theodoros Evgeniou, and Philippe Delquié</div>
-                    <div class="pub-venue">Management Science, 59(3), 613-640, 2013.</div>
-                </div>
-
-                <div class="pub-item category-peer-reviewed">
-                    <div class="pub-title">Intrinsic versus Image-Related Utility in Social Media: Why Do People Contribute Content to Twitter?</div>
-                    <div class="pub-authors">Olivier Toubia and Andrew T. Stephen</div>
-                    <div class="pub-venue">Marketing Science, 32(3) (lead article), 368-392, 2013.</div>
-                    <div class="pub-awards">
-                        <span class="award-badge">Winner, 2022 Don Morrison Long Term Impact Award</span>
-                        <span class="award-badge">Finalist, 2013 John Little Award</span>
-                    </div>
-                </div>
-
-                <div class="pub-item category-peer-reviewed">
-                    <div class="pub-title">Improving Penetration Forecasts Using Social Interactions Data</div>
-                    <div class="pub-authors">Olivier Toubia, Jacob Goldenberg, and Rosanna Garcia</div>
-                    <div class="pub-venue">Management Science, 60(12), 3049-3066, 2014.</div>
-                </div>
-
-                <div class="pub-item category-peer-reviewed">
-                    <div class="pub-title">A Bounded Rationality Model of Information Search and Choice in Preference Measurement</div>
-                    <div class="pub-authors">Cathy L. Yang, Olivier Toubia, and Martijn G. de Jong</div>
-                    <div class="pub-venue">Journal of Marketing Research, 52(2), 166-183, 2015.</div>
-                    <div class="pub-awards">
-                        <span class="award-badge">Winner, 2015 Paul E. Green Award</span>
-                    </div>
-                </div>
-
-                <div class="pub-item category-peer-reviewed">
-                    <div class="pub-title">The Future of Quantitative Marketing: Results of a Survey</div>
-                    <div class="pub-authors">Donald R. Lehmann, Oded Netzer, and Olivier Toubia</div>
-                    <div class="pub-venue">Customer Needs and Solutions, 2, 5-18, 2015.</div>
-                </div>
-
-                <div class="pub-item category-peer-reviewed">
-                    <div class="pub-title">Improving Online Idea Generation Platforms and Customizing the Task Structure Based on Consumers’ Domain Specific Knowledge</div>
-                    <div class="pub-authors">Lan Luo and Olivier Toubia</div>
-                    <div class="pub-venue">Journal of Marketing, 79(5), 100-114, 2015.</div>
-                </div>
-
-                <div class="pub-item category-peer-reviewed">
-                    <div class="pub-title">Affect as an ordinal system of utility assessment</div>
-                    <div class="pub-authors">Michel Tuan Pham, Ali Faraji-Rad, Olivier Toubia, and Leonard Lee</div>
-                    <div class="pub-venue">Organizational Behavior and Human Decision Processes, 132 (November), 81-94, 2015.</div>
-                </div>
-
-                <div class="pub-item category-peer-reviewed">
-                    <div class="pub-title">Idea Generation, Creativity, and Prototypicality</div>
-                    <div class="pub-authors">Olivier Toubia and Oded Netzer</div>
-                    <div class="pub-venue">Marketing Science, 36(1) (lead article), 1-20, 2017.</div>
-                    <div class="pub-awards">
-                        <span class="award-badge">Winner, 2017 John Little Award</span>
-                        <span class="award-badge">Finalist, 2025 Don Morrison Long Term Impact Award</span>
-                    </div>
-                </div>
-
-                <div class="pub-item category-peer-reviewed">
-                    <div class="pub-title">A Semantic Approach for Estimating Consumer Content Preferences from Online Search Queries</div>
-                    <div class="pub-authors">Jia Liu and Olivier Toubia</div>
-                    <div class="pub-venue">Marketing Science, 37(6), 930-952, 2018.</div>
-                    <div class="pub-awards">
-                        <span class="award-badge">Winner, 2018 John Little Award</span>
-                    </div>
-                </div>
-
-                <div class="pub-item category-peer-reviewed">
-                    <div class="pub-title">Attention, Information Processing and Choice in Incentive-Aligned Choice Experiments</div>
-                    <div class="pub-authors">Cathy L. Yang, Olivier Toubia, and Martijn G. de Jong</div>
-                    <div class="pub-venue">Journal of Marketing Research, 55(6) (lead article), 783-800, 2018.</div>
-                </div>
-
-                <div class="pub-item category-peer-reviewed">
-                    <div class="pub-title">What’s the Catch? Suspicion in Motives of Banks and Sluggish Refinancing</div>
-                    <div class="pub-authors">Eric Johnson, Stephan Meier, and Olivier Toubia</div>
-                    <div class="pub-venue">The Review of Financial Studies, 32(2), 467-495, 2019.</div>
-                    <div class="pub-awards">
-                        <span class="award-badge">Finalist, 2020 Exeter Prize</span>
-                    </div>
-                </div>
-
-                <div class="pub-item category-peer-reviewed">
-                    <div class="pub-title">Extracting Features of Entertainment Products: A Guided LDA Approach Informed by the Psychology of Media Consumption</div>
-                    <div class="pub-authors">Olivier Toubia, Garud Iyengar, Renée Bunnell, and Alain Lemaire</div>
-                    <div class="pub-venue">Journal of Marketing Research, 56(1), 18-36, 2019.</div>
-                </div>
-
-                <div class="pub-item category-peer-reviewed">
-                    <div class="pub-title">Search Query Formation by Strategic Consumers</div>
-                    <div class="pub-authors">Jia Liu and Olivier Toubia</div>
-                    <div class="pub-venue">Quantitative Marketing and Economics, 18, 155-194, 2020.</div>
-                </div>
-
-                <div class="pub-item category-peer-reviewed">
-                    <div class="pub-title">How Quantifying the Shape of Stories Predicts Their Success</div>
-                    <div class="pub-authors">Olivier Toubia, Jonah Berger, and Jehoshua Eliashberg</div>
-                    <div class="pub-venue">Proceedings of the National Academy of Sciences, 118(26), 2021.</div>
-                </div>
-
-                <div class="pub-item category-peer-reviewed">
-                    <div class="pub-title">Content-Based Model of Web Search Behavior: An Application to TV Show Search</div>
-                    <div class="pub-authors">Jia Liu, Olivier Toubia, and Shawndra Hill</div>
-                    <div class="pub-venue">Management Science, 67(10), 6378-6398, 2021.</div>
-                </div>
-
-                <div class="pub-item category-peer-reviewed">
-                    <div class="pub-title">A Poisson Factorization Topic Model for the Study of Creative Documents (and their Summaries)</div>
-                    <div class="pub-authors">Olivier Toubia</div>
-                    <div class="pub-venue">Journal of Marketing Research, 58(6), 1142-1158, 2021.</div>
-                </div>
-
-                <div class="pub-item category-peer-reviewed">
-                    <div class="pub-title">Pricing Fairness in a Pandemic: Navigating Unintended Changes to Value or Cost</div>
-                    <div class="pub-authors">Elizabeth Friedman and Olivier Toubia</div>
-                    <div class="pub-venue">Journal of the Association for Consumer Research (special issue on COVID-19), 7(1), 89-97, 2022.</div>
-                </div>
-
-                <div class="pub-item category-peer-reviewed">
-                    <div class="pub-title">Letting Logos Speak: Leveraging Multiview Representation Learning for Data-Driven Branding and Logo Design</div>
-                    <div class="pub-authors">Ryan Dew, Asim Ansari, and Olivier Toubia</div>
-                    <div class="pub-venue">Marketing Science, 41(2), 401-425, 2022.</div>
-                    <div class="pub-awards">
-                        <span class="award-badge">Finalist, 2022 John Little Award</span>
-                    </div>
-                </div>
-
-                <div class="pub-item category-peer-reviewed">
-                    <div class="pub-title">The More You Ask, the Less You Get: When Additional Questions Hurt External Validity</div>
-                    <div class="pub-authors">Ye Li, Antonia Krefeld-Schwalb, Daniel Wall, Olivier Toubia, Eric J. Johnson, and Daniel M. Bartels</div>
-                    <div class="pub-venue">Journal of Marketing Research, 59(5), 963-982, 2022.</div>
-                </div>
-
-                <div class="pub-item category-peer-reviewed">
-                    <div class="pub-title">A Quantitative Study of Non-Linearity in Storytelling</div>
-                    <div class="pub-authors">Andrew Piper and Olivier Toubia</div>
-                    <div class="pub-venue">Poetics, 98 (101793), 2023.</div>
-                </div>
-
-                <div class="pub-item category-peer-reviewed">
-                    <div class="pub-title">The Topography of Thought</div>
-                    <div class="pub-authors">Jonah Berger and Olivier Toubia</div>
-                    <div class="pub-venue">PNAS Nexus, 3(5), pgae 163, 2024.</div>
-                </div>
-
-                <div class="pub-item category-peer-reviewed">
-                    <div class="pub-title">Prompt architecture induces methodological artifacts in large language models</div>
-                    <div class="pub-authors">Melanie Brucks and Olivier Toubia</div>
-                    <div class="pub-venue">PlosOne, 20(4), 2025.</div>
-                </div>
-
-                <div class="pub-item category-peer-reviewed">
-                    <div class="pub-title">Better Innovation for a Better World</div>
-                    <div class="pub-authors">Darren W. Dahl, Charles H. Noble, Martin Schreier, and Olivier Toubia</div>
-                    <div class="pub-venue">Journal of Marketing, 89(6), 100-118, 2025.</div>
-                </div>
-
-                <div class="pub-item category-peer-reviewed">
-                    <div class="pub-title">Database Report: Twin-2K-500: A dataset for building digital twins of over 2,000 people based on their answers to over 500 questions</div>
-                    <div class="pub-authors">Olivier Toubia, George Z. Gui, Tianyi Peng, Daniel J. Merlau, Ang Li, and Haozhe Chen</div>
-                    <div class="pub-venue">Marketing Science, 44(6), 1446-1455, 2025.</div>
-                </div>
-
-                <div class="pub-item category-peer-reviewed">
-                    <div class="pub-title">Fairness Perceptions in Demographic Targeting</div>
-                    <div class="pub-authors">Franklin Shaddy, Elizabeth M. S. Friedman, and Olivier Toubia</div>
-                    <div class="pub-venue">Journal of Consumer Research, 53(1), 22-47, 2026.</div>
-                </div>
-
-                <div class="pub-item category-peer-reviewed">
-                    <div class="pub-title">Discrimination Against Femininity in Headshots: A Field Experiment with AI-Enabled Controllable Stimuli Generation</div>
-                    <div class="pub-authors">Lan E. Luo and Olivier Toubia</div>
-                    <div class="pub-venue">Marketing Science (Frontiers), forthcoming, 2026.</div>
-                </div>
-
-                <div class="pub-item category-peer-reviewed">
-                    <div class="pub-title">Optimally Sequencing Semantic Search Predicts Creativity</div>
-                    <div class="pub-authors">Olivier Toubia and Jonah Berger</div>
-                    <div class="pub-venue">PLoS One, 21(6): e0352328, 2026.</div>
-                </div>
-
-                <div class="pub-item category-peer-reviewed">
-                    <div class="pub-title">Digital Twins are Funhouse Mirrors: Five Systematic Distortions</div>
-                    <div class="pub-authors">Tianyi Peng, Melanie Brucks, George Gui, Daniel J. Merlau, Grace Jiarui Fan, Malek Ben Sliman, Eric J. Johnson, Abdullah Althenayyan, Silvia Bellezza, Dante Donati, Hortense Fong, Elizabeth Friedman, Ariana Guevara, Mohamed Hussein, Kinshuk Jerath, Bruce Kogut, Akshit Kumar, Kristen Lane, Hannah Li, Vicki Morwitz, Oded Netzer, Patryk Perkowski, and Olivier Toubia</div>
-                    <div class="pub-venue">Science Advances, forthcoming, 2026.</div>
-                </div>
-
-                <!-- BOOK CHAPTERS AND NON PEER-REVIEWED PUBLICATIONS -->
-
-                <div class="pub-item category-books">
-                    <div class="pub-title">Optimization-Based and Machine-Learning Methods for Conjoint Analysis: Estimation and Question Design</div>
-                    <div class="pub-authors">Olivier Toubia, Theodoros Evgeniou, and John R. Hauser</div>
-                    <div class="pub-venue">In Conjoint Measurement: Methods and Applications, 4th edition, edited by A. Gustafsson, A. Herrmann, and F. Huber, 2008.</div>
-                </div>
-
-                <div class="pub-item category-books">
-                    <div class="pub-title">New Product Development</div>
-                    <div class="pub-authors">Olivier Toubia</div>
-                    <div class="pub-venue">In Handbook of Technology Management, edited by Hossein Bidgoli, 2010.</div>
-                </div>
-
-                <div class="pub-item category-books">
-                    <div class="pub-title">Conjoint Analysis</div>
-                    <div class="pub-authors">Olivier Toubia</div>
-                    <div class="pub-venue">In Handbook of Marketing Analytics: Methods and Applications in Marketing Management, Public Policy, and Litigation Support, edited by Natalie Mizik and Dominique M. Hanssens, 2018.</div>
-                </div>
-
-                <div class="pub-item category-books">
-                    <div class="pub-title">Editorial: A New Chapter or a New Page for Marketing Science?</div>
-                    <div class="pub-authors">Olivier Toubia</div>
-                    <div class="pub-venue">Marketing Science, 41(1), 1-6, 2022.</div>
-                </div>
-
-                <div class="pub-item category-books">
-                    <div class="pub-title">Editorial: Next Steps for Frontiers in Marketing Science</div>
-                    <div class="pub-authors">Anocha Aribarg, et al.</div>
-                    <div class="pub-venue">Marketing Science, 41(5), 443-444, 2022.</div>
-                </div>
-
-                <div class="pub-item category-books">
-                    <div class="pub-title">Marketing’s Role in the Evolving Discipline of Product Management</div>
-                    <div class="pub-authors">Jeffrey D. Shulman, Olivier Toubia, and Raena Saddler</div>
-                    <div class="pub-venue">Marketing Science, 42(1), 1-5, 2023.</div>
-                </div>
-
-                <div class="pub-item category-books">
-                    <div class="pub-title">The State of AI Research in Marketing: Active, Fertile, and Ready for Explosive Growth</div>
-                    <div class="pub-authors">K. Sudhir and Olivier Toubia</div>
-                    <div class="pub-venue">In Artificial Intelligence in Marketing, 1-12, Emerald Publishing Limited, 2023.</div>
-                </div>
-
-                <div class="pub-item category-books">
-                    <div class="pub-title">Artificial Intelligence in Marketing (Co-Editor)</div>
-                    <div class="pub-authors">K. Sudhir and Olivier Toubia (Co-editors)</div>
-                    <div class="pub-venue">Review of Marketing Research series (vol. 20), Emerald Publishing Limited, 2023.</div>
-                </div>
-
-                <div class="pub-item category-books">
-                    <div class="pub-title">How Gen AI Is Transforming Market Research</div>
-                    <div class="pub-authors">Jeremy Korst, Stefano Puntoni, and Olivier Toubia</div>
-                    <div class="pub-venue">Harvard Business Review Magazine, May-June 2025.</div>
-                </div>
-
-                <div class="pub-item category-books">
-                    <div class="pub-title">The AI Tools That Are Transforming Market Research</div>
-                    <div class="pub-authors">Jeremy Korst, Stefano Puntoni, and Olivier Toubia</div>
-                    <div class="pub-venue">Harvard Business Review, 11/17/2025.</div>
-                </div>
-
-                <div class="pub-item category-books">
-                    <div class="pub-title">How AI Helps Scale Qualitative Customer Research</div>
-                    <div class="pub-authors">Jeremy Korst, Stefano Puntoni, and Olivier Toubia</div>
-                    <div class="pub-venue">Harvard Business Review, 04/06/2026.</div>
-                </div>
-
-            </div>
+      <div class="pub-card">
+        <div class="pub-authors">Toubia, Olivier, Duncan I. Simester, John R. Hauser, and Ely Dahan (2003)</div>
+        <div class="pub-title">“Fast Polyhedral Adaptive Conjoint Estimation”</div>
+        <div class="pub-journal">Marketing Science, 22(3) (lead article)</div>
+        <div>
+          <span class="badge-winner">Winner, 2003 John Little Award</span>
+          <span class="badge-winner">Winner, 2005 Frank M. Bass Award</span>
+          <span class="badge-finalist">Finalist, 2011-2013 ISMS Long Term Impact Award</span>
         </div>
+      </div>
+
+      <div class="pub-card">
+        <div class="pub-authors">Toubia, Olivier, John R. Hauser, and Duncan I. Simester (2004)</div>
+        <div class="pub-title">“Polyhedral Methods for Adaptive Choice-Based Conjoint Analysis”</div>
+        <div class="pub-journal">Journal of Marketing Research, 16, 116-131</div>
+        <div><span class="badge-finalist">Finalist, 2004 Paul Green Award</span></div>
+      </div>
+
+      <div class="pub-card">
+        <div class="pub-authors">Hauser, John R., and Olivier Toubia (2005)</div>
+        <div class="pub-title">“The Impact of Utility Balance and Endogeneity in Conjoint Analysis”</div>
+        <div class="pub-journal">Marketing Science, 24(3)</div>
+      </div>
+
+      <div class="pub-card">
+        <div class="pub-authors">Toubia, Olivier (2006)</div>
+        <div class="pub-title">“Idea Generation, Creativity, and Incentives”</div>
+        <div class="pub-journal">Marketing Science, 25(5) (lead article)</div>
+        <div>
+          <span class="badge-winner">Winner, 2006 John Little Award</span>
+          <span class="badge-winner">Winner, 2016 ISMS Long Term Impact Award</span>
+          <span class="badge-finalist">Finalist, 2013-2015 ISMS Long Term Impact Award</span>
+        </div>
+      </div>
+
+      <div class="pub-card">
+        <div class="pub-authors">Toubia, Olivier, and Laurent Florès (2007)</div>
+        <div class="pub-title">“Adaptive Idea Screening Using Consumers”</div>
+        <div class="pub-journal">Marketing Science, 26(3), 342-361</div>
+      </div>
+
+      <div class="pub-card">
+        <div class="pub-authors">Toubia, Olivier, John R. Hauser, and Rosanna Garcia (2007)</div>
+        <div class="pub-title">“Probabilistic Polyhedral Methods for Adaptive Choice-Based Conjoint Analysis: Theory and Application”</div>
+        <div class="pub-journal">Marketing Science, 26(5) (lead article)</div>
+        <div><span class="badge-winner">Winner, 2005 John A. Howard AMA Dissertation Award</span></div>
+      </div>
+
+      <div class="pub-card">
+        <div class="pub-authors">Toubia, Olivier, and John R. Hauser (2007)</div>
+        <div class="pub-title">“On Managerial Efficiency for Experimental Designs”</div>
+        <div class="pub-journal">Marketing Science, 26(6)</div>
+      </div>
+
+      <div class="pub-card">
+        <div class="pub-authors">Evgeniou, Theodoros, Massimilano Pontil, and Olivier Toubia (2007)</div>
+        <div class="pub-title">“A Convex Optimization Approach to Modeling Consumer Heterogeneity in Conjoint Estimation”</div>
+        <div class="pub-journal">Marketing Science, 26(6)</div>
+      </div>
+
+      <div class="pub-card">
+        <div class="pub-authors">Abernethy, Jacob, Theodoros Evgeniou, Olivier Toubia, and Jean-Philippe Vert (2008)</div>
+        <div class="pub-title">“Eliciting Consumer Preferences using Robust Adaptive Choice Questionnaires”</div>
+        <div class="pub-journal">IEEE Transactions on Knowledge and Data Engineering, 20(2) (lead article)</div>
+      </div>
+
+      <div class="pub-card">
+        <div class="pub-authors">Netzer, Oded, Olivier Toubia, Eric T. Bradlow, Ely Dahan, Theodoros Evgeniou, Fred M. Feinberg, Eleanor M. Feit, Sam K. Hui, Joseph Johnson, John C. Liechty, James B. Orlin, Vithala R. Rao (2008)</div>
+        <div class="pub-title">“Beyond Conjoint Analysis: Advances in Preference Measurement”</div>
+        <div class="pub-journal">Marketing Letters, 19(3)</div>
+      </div>
+
+      <div class="pub-card">
+        <div class="pub-authors">Jarnebrant, Peter, Olivier Toubia, and Eric Johnson (2009)</div>
+        <div class="pub-title">“The Silver Lining Effect: Formal Analysis and Experiments”</div>
+        <div class="pub-journal">Management Science, 55(11)</div>
+      </div>
+
+      <div class="pub-card">
+        <div class="pub-authors">Stephen, Andrew, and Olivier Toubia (2009)</div>
+        <div class="pub-title">“Explaining the Power-Law Degree Distribution in a Social Commerce Network”</div>
+        <div class="pub-journal">Social Networks, 31 (262-270)</div>
+      </div>
+
+      <div class="pub-card">
+        <div class="pub-authors">Ofek, Elie, and Olivier Toubia (2009)</div>
+        <div class="pub-title">“Marketing and Innovation Management: An Integrated Perspective”</div>
+        <div class="pub-journal">Foundations and Trends in Marketing, 4(2), 77-128</div>
+      </div>
+
+      <div class="pub-card">
+        <div class="pub-authors">Stephen, Andrew, and Olivier Toubia (2010)</div>
+        <div class="pub-title">“Deriving Value from Social Commerce Networks”</div>
+        <div class="pub-journal">Journal of Marketing Research, 47(2), 215-228</div>
+        <div>
+          <span class="badge-winner">Winner, 2010 Don Lehmann Award</span>
+          <span class="badge-finalist">Finalist, 2010 Paul Green Award</span>
+          <span class="badge-finalist">Finalist, 2015 William F. O’Dell Award</span>
+        </div>
+      </div>
+
+      <div class="pub-card">
+        <div class="pub-authors">Hauser, John, Olivier Toubia, Theodoros Evgeniou, Rene Befurt, and Daria Dzyabura (2010)</div>
+        <div class="pub-title">“Disjunctions of Conjunctions, Cognitive Complexity, and Consideration Sets”</div>
+        <div class="pub-journal">Journal of Marketing Research, 47(3), 485-496</div>
+      </div>
+
+      <div class="pub-card">
+        <div class="pub-authors">Toubia, Olivier, Martijn G. de Jong, Daniel Stieger, and Johann Fueller (2012)</div>
+        <div class="pub-title">“Measuring Consumer Preferences Using Conjoint Poker”</div>
+        <div class="pub-journal">Marketing Science, 31(1), 138-156</div>
+      </div>
+
+      <div class="pub-card">
+        <div class="pub-authors">Toubia, Olivier, Eric Johnson, Theodoros Evgeniou, and Philippe Delquié (2013)</div>
+        <div class="pub-title">“Dynamic Experiments for Estimating Preferences: An Adaptive Method of Eliciting Time and Risk Parameters”</div>
+        <div class="pub-journal">Management Science, 59(3), 613-640</div>
+      </div>
+
+      <div class="pub-card">
+        <div class="pub-authors">Toubia, Olivier, and Andrew T. Stephen (2013)</div>
+        <div class="pub-title">“Intrinsic versus Image-Related Utility in Social Media: Why Do People Contribute Content to Twitter?”</div>
+        <div class="pub-journal">Marketing Science, 32(3), 368-392 (lead article)</div>
+        <div>
+          <span class="badge-winner">Winner, 2022 Don Morrison Long Term Impact Award</span>
+          <span class="badge-finalist">Finalist, 2013 John Little Award</span>
+        </div>
+      </div>
+
+      <div class="pub-card">
+        <div class="pub-authors">Toubia, Olivier, Jacob Goldenberg, and Rosanna Garcia (2014)</div>
+        <div class="pub-title">“Improving Penetration Forecasts Using Social Interactions Data”</div>
+        <div class="pub-journal">Management Science, 60(12), 3049-3066</div>
+      </div>
+
+      <div class="pub-card">
+        <div class="pub-authors">Yang, Cathy L., Olivier Toubia, and Martijn G. de Jong (2015)</div>
+        <div class="pub-title">“A Bounded Rationality Model of Information Search and Choice in Preference Measurement”</div>
+        <div class="pub-journal">Journal of Marketing Research, 52(2), 166-183</div>
+        <div><span class="badge-winner">Winner, 2015 Paul E. Green Award</span></div>
+      </div>
+
+      <div class="pub-card">
+        <div class="pub-authors">Lehmann, Donald R., Oded Netzer, and Olivier Toubia (2015)</div>
+        <div class="pub-title">“The Future of Quantitative Marketing: Results of a Survey”</div>
+        <div class="pub-journal">Customer Needs and Solutions, 2, 5-18</div>
+      </div>
+
+      <div class="pub-card">
+        <div class="pub-authors">Luo, Lan, and Olivier Toubia (2015)</div>
+        <div class="pub-title">“Improving Online Idea Generation Platforms and Customizing the Task Structure Based on Consumers’ Domain Specific Knowledge”</div>
+        <div class="pub-journal">Journal of Marketing, 79(5), 100-114</div>
+      </div>
+
+      <div class="pub-card">
+        <div class="pub-authors">Pham, Michel Tuan, Ali Faraji-Rad, Olivier Toubia, and Leonard Lee (2015)</div>
+        <div class="pub-title">“Affect as an Ordinal System of Utility Assessment”</div>
+        <div class="pub-journal">Organizational Behavior and Human Decision Processes, 132 (November), 81-94</div>
+      </div>
+
+      <div class="pub-card">
+        <div class="pub-authors">Toubia, Olivier, and Oded Netzer (2017)</div>
+        <div class="pub-title">“Idea Generation, Creativity, and Prototypicality”</div>
+        <div class="pub-journal">Marketing Science, 36(1), 1-20 (lead article)</div>
+        <div>
+          <span class="badge-winner">Winner, 2017 John Little Award</span>
+          <span class="badge-finalist">Finalist, 2025 Don Morrison Long Term Impact Award</span>
+        </div>
+      </div>
+
+      <div class="pub-card">
+        <div class="pub-authors">Liu, Jia, and Olivier Toubia (2018)</div>
+        <div class="pub-title">“A Semantic Approach for Estimating Consumer Content Preferences from Online Search Queries”</div>
+        <div class="pub-journal">Marketing Science, 37(6), 930-952</div>
+        <div><span class="badge-winner">Winner, 2018 John Little Award</span></div>
+      </div>
+
+      <div class="pub-card">
+        <div class="pub-authors">Yang, Cathy L., Olivier Toubia, and Martijn G. de Jong (2018)</div>
+        <div class="pub-title">“Attention, Information Processing and Choice in Incentive-Aligned Choice Experiments”</div>
+        <div class="pub-journal">Journal of Marketing Research, 55(6), 783-800 (lead article)</div>
+      </div>
+
+      <div class="pub-card">
+        <div class="pub-authors">Johnson, Eric, Stephan Meier, and Olivier Toubia (2019)</div>
+        <div class="pub-title">“What’s the Catch? Suspicion in Motives of Banks and Sluggish Refinancing”</div>
+        <div class="pub-journal">The Review of Financial Studies, 32(2), 467-495</div>
+        <div><span class="badge-finalist">Finalist, 2020 Exeter Prize</span></div>
+      </div>
+
+      <div class="pub-card">
+        <div class="pub-authors">Toubia, Olivier, Garud Iyengar, Renée Bunnell, and Alain Lemaire (2019)</div>
+        <div class="pub-title">“Extracting Features of Entertainment Products: A Guided LDA Approach Informed by the Psychology of Media Consumption”</div>
+        <div class="pub-journal">Journal of Marketing Research, 56(1), 18-36</div>
+      </div>
+
+      <div class="pub-card">
+        <div class="pub-authors">Liu, Jia, and Olivier Toubia (2020)</div>
+        <div class="pub-title">“Search Query Formation by Strategic Consumers”</div>
+        <div class="pub-journal">Quantitative Marketing and Economics, 18, 155-194</div>
+      </div>
+
+      <div class="pub-card">
+        <div class="pub-authors">Toubia, Olivier, Jonah Berger, and Jehoshua Eliashberg (2021)</div>
+        <div class="pub-title">“How Quantifying the Shape of Stories Predicts Their Success”</div>
+        <div class="pub-journal">Proceedings of the National Academy of Sciences, 118(26)</div>
+      </div>
+
+      <div class="pub-card">
+        <div class="pub-authors">Liu, Jia, Olivier Toubia, and Shawndra Hill (2021)</div>
+        <div class="pub-title">“Content-Based Model of Web Search Behavior: An Application to TV Show Search”</div>
+        <div class="pub-journal">Management Science, 67(10), 6378-6398</div>
+      </div>
+
+      <div class="pub-card">
+        <div class="pub-authors">Toubia, Olivier (2021)</div>
+        <div class="pub-title">“A Poisson Factorization Topic Model for the Study of Creative Documents (and their Summaries)”</div>
+        <div class="pub-journal">Journal of Marketing Research, 58(6), 1142-1158</div>
+      </div>
+
+      <div class="pub-card">
+        <div class="pub-authors">Friedman, Elizabeth, and Olivier Toubia (2022)</div>
+        <div class="pub-title">“Pricing Fairness in a Pandemic: Navigating Unintended Changes to Value or Cost”</div>
+        <div class="pub-journal">Journal of the Association for Consumer Research (special issue on COVID-19), 7(1), 89-97</div>
+      </div>
+
+      <div class="pub-card">
+        <div class="pub-authors">Dew, Ryan, Asim Ansari, and Olivier Toubia (2022)</div>
+        <div class="pub-title">“Letting Logos Speak: Leveraging Multiview Representation Learning for Data-Driven Branding and Logo Design”</div>
+        <div class="pub-journal">Marketing Science, 41(2), 401-425</div>
+        <div><span class="badge-finalist">Finalist, 2022 John Little Award</span></div>
+      </div>
+
+      <div class="pub-card">
+        <div class="pub-authors">Li, Ye, Antonia Krefeld-Schwalb, Daniel Wall, Olivier Toubia, Eric J. Johnson, Daniel M. Bartels (2022)</div>
+        <div class="pub-title">“The More You Ask, the Less You Get: When Additional Questions Hurt External Validity”</div>
+        <div class="pub-journal">Journal of Marketing Research, 59(5), 963-982</div>
+      </div>
+
+      <div class="pub-card">
+        <div class="pub-authors">Piper, Andrew, and Olivier Toubia (2023)</div>
+        <div class="pub-title">“A Quantitative Study of Non-Linearity in Storytelling”</div>
+        <div class="pub-journal">Poetics, 98 (101793)</div>
+      </div>
+
+      <div class="pub-card">
+        <div class="pub-authors">Berger, Jonah, and Olivier Toubia (2024)</div>
+        <div class="pub-title">“The Topography of Thought”</div>
+        <div class="pub-journal">PNAS Nexus, 3(5), pgae 163</div>
+      </div>
+
+      <div class="pub-card">
+        <div class="pub-authors">Brucks, Melanie, and Olivier Toubia (2025)</div>
+        <div class="pub-title">“Prompt Architecture Induces Methodological Artifacts in Large Language Models”</div>
+        <div class="pub-journal">PLoS ONE, 20(4)</div>
+      </div>
+
+      <div class="pub-card">
+        <div class="pub-authors">Dahl, Darren W., Charles H. Noble, Martin Schreier, and Olivier Toubia (2025)</div>
+        <div class="pub-title">“Better Innovation for a Better World”</div>
+        <div class="pub-journal">Journal of Marketing, 89(6), 100-118</div>
+      </div>
+
+      <div class="pub-card">
+        <div class="pub-authors">Toubia, Olivier, George Z. Gui, Tianyi Peng, Daniel J. Merlau, Ang Li, and Haozhe Chen (2025)</div>
+        <div class="pub-title">“Database Report: Twin-2K-500: A Dataset for Building Digital Twins of Over 2,000 People Based on Their Answers to Over 500 Questions”</div>
+        <div class="pub-journal">Marketing Science, 44(6), 1446-1455</div>
+      </div>
+
+      <div class="pub-card">
+        <div class="pub-authors">Shaddy, Franklin, Elizabeth M. S. Friedman, and Olivier Toubia (2026)</div>
+        <div class="pub-title">“Fairness Perceptions in Demographic Targeting”</div>
+        <div class="pub-journal">Journal of Consumer Research, 53(1), 22-47</div>
+      </div>
+
+      <div class="pub-card">
+        <div class="pub-authors">Luo, Lan E., and Olivier Toubia (2026)</div>
+        <div class="pub-title">“Discrimination Against Femininity in Headshots: A Field Experiment with AI-Enabled Controllable Stimuli Generation”</div>
+        <div class="pub-journal">Marketing Science (Frontiers), forthcoming</div>
+      </div>
+
+      <div class="pub-card">
+        <div class="pub-authors">Toubia, Olivier, and Jonah Berger (2026)</div>
+        <div class="pub-title">“Optimally Sequencing Semantic Search Predicts Creativity”</div>
+        <div class="pub-journal">PLoS ONE, 21(6): e0352328</div>
+      </div>
+
+      <div class="pub-card">
+        <div class="pub-authors">Peng, Tianyi, Melanie Brucks, George Gui, Daniel J. Merlau, Grace Jiarui Fan, Malek Ben Sliman, Eric J. Johnson, Abdullah Althenayyan, Silvia Bellezza, Dante Donati, Hortense Fong, Elizabeth Friedman, Ariana Guevara, Mohamed Hussein, Kinshuk Jerath, Bruce Kogut, Akshit Kumar, Kristen Lane, Hannah Li, Vicki Morwitz, Oded Netzer, Patryk Perkowski, and Olivier Toubia (2026)</div>
+        <div class="pub-title">“Digital Twins are Funhouse Mirrors: Five Systematic Distortions”</div>
+        <div class="pub-journal">Science Advances, forthcoming</div>
+      </div>
     </section>
 
-    <!-- OUTSIDE ACTIVITIES SECTION -->
+    <!-- Book Chapters & Articles -->
+    <section id="books">
+      <h2 class="section-title"><i class="fa-solid fa-book-open"></i> Book Chapters & Non Peer-Reviewed Publications</h2>
+
+      <div class="pub-card">
+        <div class="pub-authors">Korst, Jeremy, Stefano Puntoni, and Olivier Toubia (2026)</div>
+        <div class="pub-title">“How AI Helps Scale Qualitative Customer Research”</div>
+        <div class="pub-journal">Harvard Business Review, 04/06/2026</div>
+      </div>
+
+      <div class="pub-card">
+        <div class="pub-authors">Korst, Jeremy, Stefano Puntoni, and Olivier Toubia (2025)</div>
+        <div class="pub-title">“The AI Tools That Are Transforming Market Research”</div>
+        <div class="pub-journal">Harvard Business Review, 11/17/2025</div>
+      </div>
+
+      <div class="pub-card">
+        <div class="pub-authors">Korst, Jeremy, Stefano Puntoni, and Olivier Toubia (2025)</div>
+        <div class="pub-title">“How Gen AI Is Transforming Market Research”</div>
+        <div class="pub-journal">Harvard Business Review Magazine, May-June</div>
+      </div>
+
+      <div class="pub-card">
+        <div class="pub-authors">Co-editor (with K. Sudhir) (2023)</div>
+        <div class="pub-title">Artificial Intelligence in Marketing</div>
+        <div class="pub-journal">Review of Marketing Research series (vol. 20), Emerald Publishing Limited</div>
+      </div>
+
+      <div class="pub-card">
+        <div class="pub-authors">Sudhir, K., and Olivier Toubia (2023)</div>
+        <div class="pub-title">“The State of AI Research in Marketing: Active, Fertile, and Ready for Explosive Growth”</div>
+        <div class="pub-journal">In Artificial Intelligence in Marketing, 1-12, Emerald Publishing Limited</div>
+      </div>
+
+      <div class="pub-card">
+        <div class="pub-authors">Shulman, Jeffrey D., Olivier Toubia, and Raena Saddler (2023)</div>
+        <div class="pub-title">“Marketing’s Role in the Evolving Discipline of Product Management”</div>
+        <div class="pub-journal">Marketing Science, 42(1), 1-5</div>
+      </div>
+
+      <div class="pub-card">
+        <div class="pub-authors">Aribarg, Anocha, et al. (2022)</div>
+        <div class="pub-title">“Editorial: Next Steps for Frontiers in Marketing Science”</div>
+        <div class="pub-journal">Marketing Science, 41(5), 443-444</div>
+      </div>
+
+      <div class="pub-card">
+        <div class="pub-authors">Toubia, Olivier (2022)</div>
+        <div class="pub-title">“Editorial: A New Chapter or a New Page for Marketing Science?”</div>
+        <div class="pub-journal">Marketing Science, 41(1), 1-6</div>
+      </div>
+
+      <div class="pub-card">
+        <div class="pub-authors">Toubia, Olivier (2018)</div>
+        <div class="pub-title">“Conjoint Analysis”</div>
+        <div class="pub-journal">Handbook of Marketing Analytics: Methods and Applications in Marketing Management, Public Policy, and Litigation Support (ed. N. Mizik & D. M. Hanssens)</div>
+      </div>
+
+      <div class="pub-card">
+        <div class="pub-authors">Toubia, Olivier (2010)</div>
+        <div class="pub-title">“New Product Development”</div>
+        <div class="pub-journal">Handbook of Technology Management (ed. Hossein Bidgoli)</div>
+      </div>
+
+      <div class="pub-card">
+        <div class="pub-authors">Toubia, Olivier, Theodoros Evgeniou, and John R. Hauser (2008)</div>
+        <div class="pub-title">“Optimization-Based and Machine-Learning Methods for Conjoint Analysis: Estimation and Question Design”</div>
+        <div class="pub-journal">Conjoint Measurement: Methods and Applications, 4th edition (ed. A. Gustafsson et al.)</div>
+      </div>
+    </section>
+
+    <!-- Outside Activities Section -->
     <section id="outside">
-        <div class="container">
-            <div class="section-header">
-                <h2>Outside Activities</h2>
-                <div class="accent-line"></div>
-            </div>
-            <div class="outside-activities-box">
-                <p>
-                    Columbia Business School requires faculty members to disclose any recent activities that might present a real or apparent conflict of interest. Recently I have served as an expert witness on behalf of technology companies, dietary supplement companies, a children’s products company, a hospitality company, and consumer packaged goods companies.
-                </p>
-            </div>
-        </div>
+      <h2 class="section-title"><i class="fa-solid fa-scale-balanced"></i> Outside Activities</h2>
+      <div class="disclosure-box">
+        Columbia Business School requires faculty members to disclose any recent activities that might present a real or apparent conflict of interest. Recently I have served as an expert witness on behalf of technology companies, dietary supplement companies, a children’s products company, a hospitality company, and consumer packaged goods companies.
+      </div>
     </section>
 
-    <!-- FOOTER -->
-    <footer>
-        <div class="container">
-            <p>&copy; 2026 Olivier Toubia • Columbia Business School</p>
-            <p style="margin-top: 8px;">
-                <a href="https://www.linkedin.com/in/olivier-toubia-47273b4/" target="_blank">LinkedIn</a> • 
-                <a href="mailto:ot2107@gsb.columbia.edu">Email Contact</a>
-            </p>
-        </div>
-    </footer>
+  </main>
 
-    <!-- INTERACTIVE JAVASCRIPT -->
-    <script>
-        function filterPubs(category) {
-            const items = document.querySelectorAll('.pub-item');
-            const buttons = document.querySelectorAll('.filter-btn');
-
-            buttons.forEach(btn => btn.classList.remove('active'));
-            event.target.classList.add('active');
-
-            items.forEach(item => {
-                if (category === 'all') {
-                    item.style.display = 'block';
-                } else {
-                    if (item.classList.contains('category-' + category)) {
-                        item.style.display = 'block';
-                    } else {
-                        item.style.display = 'none';
-                    }
-                }
-            });
-        }
-
-        function searchPubs() {
-            const input = document.getElementById('pubSearch').value.toLowerCase();
-            const items = document.querySelectorAll('.pub-item');
-
-            items.forEach(item => {
-                const text = item.textContent.toLowerCase();
-                if (text.includes(input)) {
-                    item.style.display = 'block';
-                } else {
-                    item.style.display = 'none';
-                }
-            });
-        }
-
-        // Active link highlighting on scroll
-        window.addEventListener('scroll', () => {
-            let current = '';
-            const sections = document.querySelectorAll('section');
-            const navLi = document.querySelectorAll('nav ul li a');
-
-            sections.forEach(section => {
-                const sectionTop = section.offsetTop - 100;
-                if (pageYOffset >= sectionTop) {
-                    current = section.getAttribute('id');
-                }
-            });
-
-            navLi.forEach(a => {
-                a.classList.remove('active');
-                if (a.getAttribute('href').includes(current)) {
-                    a.classList.add('active');
-                }
-            });
-        });
-    </script>
 </body>
 </html>
-index.html
-Displaying index.html.
