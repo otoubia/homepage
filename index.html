@@ -3,177 +3,248 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Your Name — Builder & Writer</title>
+  <title>Your Name – Professor · Founder · Investor · Writer</title>
   <style>
+    /* 1. DEFINE COLORS & TYPOGRAPHY - Cloned from image_0.png */
     :root {
-      --bg: #0f1115;
-      --card-bg: #161920;
-      --border: #262a35;
-      --text: #e1e7ec;
-      --muted: #8b949e;
-      --accent: #38bdf8;
-      --accent-hover: #7dd3fc;
-      --font-mono: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
-      --font-sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+      --bg: #000000;
+      --text: #c0c0c0; /* Muted grey body text */
+      --highlight: #ffffff; /* Stark white headings */
+      --accent: #dcdcdc; /* Lighter grey accents */
+      --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      --font-serif: "Georgia", Times, serif; /* For special elements like "Say hello" */
     }
 
+    /* 2. BASE STYLES */
     * { box-sizing: border-box; margin: 0; padding: 0; }
-
     body {
       background-color: var(--bg);
       color: var(--text);
       font-family: var(--font-sans);
       line-height: 1.6;
-      padding: 2rem 1rem;
+      font-weight: 300;
+      -webkit-font-smoothing: antialiased;
     }
 
-    .container {
-      max-width: 720px;
-      margin: 0 auto;
-    }
+    .wrapper { max-width: 1400px; margin: 0 auto; display: flex; position: relative; }
+    .content-container { max-width: 900px; margin: 0 auto; padding: 4rem 2rem; position: relative; z-index: 1; }
 
-    /* Header */
-    header { margin-bottom: 3rem; }
-    .tagline { color: var(--accent); font-family: var(--font-mono); font-size: 0.9rem; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; }
-    h1 { font-size: 2.5rem; font-weight: 700; margin: 0.5rem 0 1rem; color: #fff; }
-    .bio { font-size: 1.15rem; color: var(--muted); line-height: 1.7; }
-
-    /* Layout Sections */
-    section { margin-bottom: 3.5rem; }
-    .section-num { font-family: var(--font-mono); color: var(--accent); font-size: 0.85rem; margin-bottom: 0.25rem; }
-    h2 { font-size: 1.5rem; color: #fff; margin-bottom: 1.5rem; border-bottom: 1px solid var(--border); padding-bottom: 0.5rem; }
-
-    /* Cards Grid */
-    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1rem; }
-    .card {
-      background: var(--card-bg);
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      padding: 1.25rem;
-      transition: transform 0.2s, border-color 0.2s;
-    }
-    .card:hover { border-color: var(--accent); transform: translateY(-2px); }
-    .card h3 { font-size: 1.1rem; color: #fff; margin-bottom: 0.5rem; }
-    .card p { font-size: 0.95rem; color: var(--muted); margin-bottom: 1rem; }
-    
-    /* External Links */
-    .link-out {
-      display: inline-flex;
-      align-items: center;
-      gap: 4px;
+    /* 3. VERTICAL MARGIN TEXT - Replica of original site's vertical bar */
+    .margin-text {
+      position: absolute;
+      right: 20px;
+      top: 50%;
+      transform: translateY(-50%) rotate(90deg);
+      transform-origin: right center;
       color: var(--accent);
-      text-decoration: none;
-      font-weight: 500;
-      font-size: 0.9rem;
+      font-size: 0.8rem;
+      white-space: nowrap;
+      pointer-events: none;
+      z-index: 0;
     }
-    .link-out:hover { text-decoration: underline; color: var(--accent-hover); }
 
-    /* Tags / Chips list */
-    .tags { display: flex; flex-wrap: wrap; gap: 0.5rem; }
-    .tag { background: var(--card-bg); border: 1px solid var(--border); padding: 0.4rem 0.8rem; border-radius: 20px; font-size: 0.85rem; color: var(--text); }
+    /* 4. HEADERS */
+    header { margin-bottom: 5rem; }
+    h1.main-name { font-size: 3rem; font-weight: 200; color: var(--highlight); margin-bottom: 0.5rem; letter-spacing: -1px; }
+    .main-titles { font-size: 1rem; color: var(--accent); letter-spacing: 1px; font-weight: 400; margin-bottom: 2rem; }
+    .intro-bio { font-size: 1.2rem; line-height: 1.8; max-width: 700px; }
 
-    /* Contact Form ("Say Hello") */
-    form { display: flex; flex-direction: column; gap: 1rem; background: var(--card-bg); border: 1px solid var(--border); padding: 1.5rem; border-radius: 8px; }
-    label { font-size: 0.85rem; font-family: var(--font-mono); color: var(--muted); }
+    /* 5. SECTIONS 01-07 */
+    section { margin-bottom: 6rem; position: relative; }
+    .section-num { font-size: 1.5rem; color: var(--accent); position: absolute; left: -2.5rem; top: -0.1rem; font-weight: 200; }
+    h2.section-head { font-size: 2.2rem; font-weight: 200; color: var(--highlight); margin-bottom: 2.5rem; letter-spacing: -1px; }
+    p.section-desc { font-size: 1rem; color: var(--text); max-width: 650px; margin-bottom: 2rem; }
+
+    /* 6. LAYOUT GRIDS (Building, Investing) */
+    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; }
+    .card { background: transparent; padding: 1.5rem; border: 1px solid var(--accent); }
+    .card h3 { font-size: 1.2rem; font-weight: 300; color: var(--highlight); margin-bottom: 0.5rem; }
+    .card p.card-cat { color: var(--accent); font-size: 0.9rem; margin-bottom: 1rem; text-transform: uppercase; letter-spacing: 1px; }
+    .card p.card-desc { font-size: 0.95rem; color: var(--text); margin-bottom: 1rem; }
+
+    /* Tags list (Investing) */
+    .tags { display: flex; flex-wrap: wrap; gap: 0.75rem; margin-top: 1rem; }
+    .tag { font-size: 0.9rem; color: var(--text); text-decoration: none; border-bottom: 1px solid transparent; }
+    .tag:hover { color: var(--highlight); border-bottom: 1px solid var(--highlight); }
+
+    /* Links - Replica of original "Visit →" */
+    .action-link { display: inline-flex; align-items: center; text-decoration: none; color: var(--accent); font-weight: 300; font-size: 1rem; }
+    .action-link span { border-bottom: 1px solid var(--accent); transition: border-color 0.2s; }
+    .action-link:hover span { color: var(--highlight); border-color: var(--highlight); }
+    .action-link:after { content: " →"; font-size: 1.2rem; margin-left: 5px; }
+
+    /* 7. TALKS / SPEAKING / WRITING List */
+    .link-list { list-style: none; }
+    .link-list li { margin-bottom: 1.2rem; display: flex; gap: 1rem; align-items: baseline; }
+    .link-list .num { color: var(--accent); font-weight: 200; font-size: 1.1rem; }
+    .link-list .link-title { text-decoration: none; color: var(--accent); font-weight: 300; font-size: 1.1rem; border-bottom: 1px solid transparent; }
+    .link-list .link-title:hover { color: var(--highlight); border-bottom: 1px solid var(--highlight); }
+
+    /* 8. SAY HELLO & CONTACT FORM */
+    .contact-container { display: flex; flex-wrap: wrap; gap: 3rem; margin-top: 2rem; border-top: 1px solid var(--accent); padding-top: 3rem; }
+    .contact-info { flex: 1; min-width: 300px; }
+    .say-hello { font-family: var(--font-serif); font-style: italic; font-size: 3rem; color: var(--highlight); margin-bottom: 1rem; }
+    .contact-prompt { font-size: 1.2rem; color: var(--text); margin-bottom: 2rem; }
+    .contact-links { list-style: none; display: flex; flex-direction: column; gap: 0.75rem; }
+    .contact-links a { color: var(--accent); text-decoration: none; font-size: 1rem; }
+    .contact-links a:hover { color: var(--highlight); text-decoration: underline; }
+
+    form { flex: 1; min-width: 300px; border: 1px solid var(--accent); padding: 2rem; position: relative; }
+    /* Subtle hover effect on the form */
+    form:hover { border-color: var(--highlight); }
+    label { font-size: 0.9rem; color: var(--accent); font-weight: 400; margin-bottom: 0.5rem; display: block; }
     input, textarea {
-      width: 100%;
-      background: var(--bg);
-      border: 1px solid var(--border);
-      color: var(--text);
-      padding: 0.75rem;
-      border-radius: 6px;
-      font-family: inherit;
-      font-size: 0.95rem;
+      width: 100%; background: transparent; border: 1px solid var(--accent); color: var(--highlight);
+      padding: 0.75rem; border-radius: 0; font-family: inherit; font-size: 1rem; margin-bottom: 1.5rem;
     }
-    input:focus, textarea:focus { outline: 1px solid var(--accent); border-color: var(--accent); }
+    input:focus, textarea:focus { outline: 1px solid var(--highlight); border-color: var(--highlight); }
     button {
-      background: var(--accent);
-      color: #0f1115;
-      font-weight: 600;
-      border: none;
-      padding: 0.75rem 1.5rem;
-      border-radius: 6px;
-      cursor: pointer;
-      align-self: flex-start;
-      transition: background 0.2s;
+      background: transparent; color: var(--highlight); font-weight: 400; border: 1px solid var(--highlight);
+      padding: 0.75rem 1.5rem; border-radius: 0; cursor: pointer; transition: 0.2s; font-size: 1rem;
     }
-    button:hover { background: var(--accent-hover); }
+    button:hover { background: var(--highlight); color: var(--bg); }
 
-    footer { text-align: center; color: var(--muted); font-size: 0.85rem; padding-top: 2rem; border-top: 1px solid var(--border); }
+    footer { text-align: center; color: var(--accent); font-size: 0.9rem; padding: 4rem 2rem; }
+
+    /* 9. RESPONSIVE ADJUSTMENTS */
+    @media (max-width: 900px) {
+      .content-container { padding: 4rem 1rem; max-width: 100%; }
+      .section-num { position: static; display: block; margin-bottom: 0.5rem; }
+      h1.main-name { font-size: 2.2rem; }
+      h2.section-head { font-size: 1.8rem; }
+      .say-hello { font-size: 2.2rem; }
+      .margin-text { display: none; } /* Hide vertical text on mobile */
+    }
   </style>
 </head>
 <body>
 
-  <div class="container">
-    <!-- Header -->
-    <header>
-      <p class="tagline">New York City / Builder · Investor · Teacher</p>
-      <h1>Your Name</h1>
-      <p class="bio">
-        I teach people how to leverage code, build companies from scratch, and challenge "the way things have always been done."
-      </p>
-    </header>
+  <div class="wrapper">
+    <!-- Vertical Margin Text - Cloned from image_0.png -->
+    <div class="margin-text">New York City / Professor · Founder · Investor · Writer</div>
 
-    <!-- Section 1: Building -->
-    <section>
-      <div class="section-num">01</div>
-      <h2>Building</h2>
-      <div class="grid">
-        <div class="card">
-          <h3>Project One</h3>
-          <p>An online educational platform that helps non-technical founders learn Python in 30 days.</p>
-          <a href="https://example.com" target="_blank" class="link-out">Visit Website ↗</a>
+    <div class="content-container">
+      <!-- Header -->
+      <header>
+        <h1 class="main-name">YOUR NAME</h1>
+        <p class="main-titles">Professor · Founder · Investor · Writer</p>
+        <p class="intro-bio">
+          I do a lot of different things. Here are some of them. I teach, I build companies, I back founders, and I write. This is a small subset of the things that hold my attention.
+        </p>
+      </header>
+
+      <!-- 01 The long version -->
+      <section>
+        <div class="section-num">01</div>
+        <h2 class="section-head">The long version</h2>
+        <p class="section-desc">Placeholder text about your history and philosophy, matching the deep introduction seen in the original image. Mention your background and what drives you.</p>
+      </section>
+
+      <!-- 02 Teaching -->
+      <section>
+        <div class="section-num">02</div>
+        <h2 class="section-head">Teaching</h2>
+        <p class="section-desc">Placeholder description of your teaching philosophy and experience at various institutions.</p>
+        <ul class="link-list">
+          <li><span class="num">01</span><a href="#" class="link-title">Placeholder Course Title A</a></li>
+          <li><span class="num">02</span><a href="#" class="link-title">Placeholder Course Title B</a></li>
+        </ul>
+      </section>
+
+      <!-- 03 Building -->
+      <section>
+        <div class="section-num">03</div>
+        <h2 class="section-head">Building</h2>
+        <p class="section-desc">Companies I started because the existing way of doing things didn't make sense.</p>
+        <div class="grid">
+          <div class="card">
+            <h3>Placeholder Company</h3>
+            <p class="card-cat">Healthcare</p>
+            <p class="card-desc">Placeholder description of this company's mission and accessible treatment platform.</p>
+            <a href="https://example.com" target="_blank" class="action-link"><span>Visit Website</span></a>
+          </div>
+          <div class="card">
+            <h3>Placeholder Platform</h3>
+            <p class="card-cat">Education</p>
+            <p class="card-desc">Placeholder description of this accelerated learning platform and its core bet.</p>
+            <a href="https://example.com" target="_blank" class="action-link"><span>Visit Website</span></a>
+          </div>
         </div>
-        <div class="card">
-          <h3>Project Two</h3>
-          <p>A telehealth service treating chronic medical conditions with accessible software.</p>
-          <a href="https://example.com" target="_blank" class="link-out">Visit Website ↗</a>
+      </section>
+
+      <!-- 04 Investing -->
+      <section>
+        <div class="section-num">04</div>
+        <h2 class="section-head">Investing</h2>
+        <p class="section-desc">Founders I believed in early, across many sectors.</p>
+        <div class="tags">
+          <a href="#" class="tag">Placeholder1</a>
+          <a href="#" class="tag">Placeholder2</a>
+          <a href="#" class="tag">Placeholder3</a>
+          <a href="#" class="tag">Placeholder4</a>
+          <a href="#" class="tag">Placeholder5</a>
         </div>
+      </section>
+
+      <!-- 05 Talks & speaking -->
+      <section>
+        <div class="section-num">05</div>
+        <h2 class="section-head">Talks & speaking</h2>
+        <p class="section-desc">I give talks. I like the hard questions after.</p>
+        <ul class="link-list">
+          <li><span class="num">01</span><a href="#" class="link-title">Placeholder Talk Title One</a></li>
+          <li><span class="num">02</span><a href="#" class="link-title">Placeholder Talk Title Two</a></li>
+        </ul>
+      </section>
+
+      <!-- 06 Writing -->
+      <section>
+        <div class="section-num">06</div>
+        <h2 class="section-head">Writing</h2>
+        <p class="section-desc">Placeholder text about your publications or upcoming book, matching the original layout.</p>
+        <a href="#" class="action-link"><span>Get the book</span></a>
+      </section>
+
+      <!-- 07 Advising & coaching -->
+      <section>
+        <div class="section-num">07</div>
+        <h2 class="section-head">Advising & coaching</h2>
+        <p class="section-desc">I help founders and execs get unstuck. Growth, scaling, product, team.</p>
+      </section>
+
+      <!-- Say Hello / Contact Section -->
+      <div class="contact-container">
+        <div class="contact-info">
+          <div class="say-hello">Say hello</div>
+          <p class="contact-prompt">Working on something interesting? Let's talk.</p>
+          <ul class="contact-links">
+            <li><a href="#">LinkedIn →</a></li>
+            <li><a href="#">Book a talk</a></li>
+            <li><a href="#">Advising inquiries</a></li>
+          </ul>
+        </div>
+        
+        <!-- Replica Form -->
+        <form action="https://api.web3forms.com/submit" method="POST">
+          <input type="hidden" name="access_key" value="YOUR_ACCESS_KEY_HERE">
+          <div>
+            <label for="name">Name</label>
+            <input type="text" id="name" name="name" required placeholder="">
+          </div>
+          <div>
+            <label for="message">Message</label>
+            <textarea id="message" name="message" rows="4" required placeholder=""></textarea>
+          </div>
+          <button type="submit">Send message →</button>
+        </form>
       </div>
-    </section>
 
-    <!-- Section 2: Portfolio / Angel Investments -->
-    <section>
-      <div class="section-num">02</div>
-      <h2>Investments & Advising</h2>
-      <div class="tags">
-        <span class="tag">Company A</span>
-        <span class="tag">Company B</span>
-        <span class="tag">Company C</span>
-        <span class="tag">Company D</span>
-        <span class="tag">Company E</span>
-      </div>
-    </section>
+    </div><!-- Close Content Container -->
+  </div><!-- Close Wrapper -->
 
-    <!-- Section 3: Contact Form ("Say Hello") -->
-    <section>
-      <div class="section-num">03</div>
-      <h2>Say Hello</h2>
-      <!-- Replace 'YOUR_FORM_ID' with a free form endpoint like Formspree or Web3Forms -->
-      <form action="https://api.web3forms.com/submit" method="POST">
-        <!-- Hidden access key for Web3Forms (Free service, no server setup) -->
-        <input type="hidden" name="access_key" value="YOUR_ACCESS_KEY_HERE">
-
-        <div>
-          <label for="name">Name</label>
-          <input type="text" id="name" name="name" required placeholder="Jane Doe">
-        </div>
-        <div>
-          <label for="email">Email</label>
-          <input type="email" id="email" name="email" required placeholder="jane@example.com">
-        </div>
-        <div>
-          <label for="message">Message</label>
-          <textarea id="message" name="message" rows="4" required placeholder="Working on something interesting? Let's talk..."></textarea>
-        </div>
-        <button type="submit">Send Message</button>
-      </form>
-    </section>
-
-    <footer>
-      <p>© 2026 Your Name · Hosted directly on GitHub Pages</p>
-    </footer>
-  </div>
+  <footer>
+    <p>Your Name, Made with curiosity in Your City · © 2026</p>
+  </footer>
 
 </body>
 </html>
