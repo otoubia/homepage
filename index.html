@@ -3,194 +3,346 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Your Name – Professor · Founder · Investor · Writer</title>
+  <title>Olivier Toubia — Columbia Business School</title>
   <style>
-    /* DEFINE COLORS & TYPOGRAPHY */
     :root {
-      --bg: #000000;
-      --text: #c0c0c0; /* Muted grey body text */
-      --highlight: #ffffff; /* Stark white headings */
-      --accent: #dcdcdc; /* Lighter grey accents */
-      --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      --columbia-blue: #6CACE4;
+      --columbia-blue-dark: #4A8BC2;
+      --navy: #002B49;
+      --bg: #F8FAFC;
+      --card-bg: #FFFFFF;
+      --text: #334155;
+      --text-muted: #64748B;
+      --border: #E2E8F0;
+      --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
     }
 
-    /* BASE STYLES */
     * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
     body {
       background-color: var(--bg);
       color: var(--text);
       font-family: var(--font-sans);
       line-height: 1.6;
-      font-weight: 300;
-      -webkit-font-smoothing: antialiased;
+      font-weight: 400;
     }
 
-    .wrapper { max-width: 1400px; margin: 0 auto; display: flex; position: relative; }
-    .content-container { max-width: 900px; margin: 0 auto; padding: 4rem 2rem; position: relative; z-index: 1; }
-
-    /* VERTICAL MARGIN TEXT */
-    .margin-text {
-      position: absolute;
-      right: 20px;
-      top: 50%;
-      transform: translateY(-50%) rotate(90deg);
-      transform-origin: right center;
-      color: var(--accent);
-      font-size: 0.8rem;
-      white-space: nowrap;
-      pointer-events: none;
-      z-index: 0;
+    /* STREAMLINED NAVIGATION */
+    nav {
+      position: sticky;
+      top: 0;
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(8px);
+      border-bottom: 1px solid var(--border);
+      z-index: 100;
     }
 
-    /* HEADERS */
-    header { margin-bottom: 5rem; }
-    h1.main-name { font-size: 3rem; font-weight: 200; color: var(--highlight); margin-bottom: 0.5rem; letter-spacing: -1px; }
-    .main-titles { font-size: 1rem; color: var(--accent); letter-spacing: 1px; font-weight: 400; margin-bottom: 2rem; }
-    .intro-bio { font-size: 1.2rem; line-height: 1.8; max-width: 700px; }
+    .nav-container {
+      max-width: 1000px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 2rem;
+    }
 
-    /* SECTIONS 01-07 */
-    section { margin-bottom: 6rem; position: relative; }
-    .section-num { font-size: 1.5rem; color: var(--accent); position: absolute; left: -2.5rem; top: -0.1rem; font-weight: 200; }
-    h2.section-head { font-size: 2.2rem; font-weight: 200; color: var(--highlight); margin-bottom: 2.5rem; letter-spacing: -1px; }
-    p.section-desc { font-size: 1rem; color: var(--text); max-width: 650px; margin-bottom: 2rem; }
+    .nav-brand {
+      font-weight: 700;
+      font-size: 1.1rem;
+      color: var(--navy);
+      text-decoration: none;
+    }
 
-    /* LAYOUT GRIDS (Building, Investing) */
-    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; }
-    .card { background: transparent; padding: 1.5rem; border: 1px solid var(--accent); }
-    .card h3 { font-size: 1.2rem; font-weight: 300; color: var(--highlight); margin-bottom: 0.5rem; }
-    .card p.card-cat { color: var(--accent); font-size: 0.9rem; margin-bottom: 1rem; text-transform: uppercase; letter-spacing: 1px; }
-    .card p.card-desc { font-size: 0.95rem; color: var(--text); margin-bottom: 1rem; }
+    .nav-links {
+      display: flex;
+      gap: 1.5rem;
+      list-style: none;
+    }
 
-    /* Tags list (Investing) */
-    .tags { display: flex; flex-wrap: wrap; gap: 0.75rem; margin-top: 1rem; }
-    .tag { font-size: 0.9rem; color: var(--text); text-decoration: none; border-bottom: 1px solid transparent; }
-    .tag:hover { color: var(--highlight); border-bottom: 1px solid var(--highlight); }
+    .nav-links a {
+      text-decoration: none;
+      color: var(--text);
+      font-size: 0.95rem;
+      font-weight: 500;
+      transition: color 0.2s;
+    }
 
-    /* Links */
-    .action-link { display: inline-flex; align-items: center; text-decoration: none; color: var(--accent); font-weight: 300; font-size: 1rem; }
-    .action-link span { border-bottom: 1px solid var(--accent); transition: border-color 0.2s; }
-    .action-link:hover span { color: var(--highlight); border-color: var(--highlight); }
-    .action-link:after { content: " →"; font-size: 1.2rem; margin-left: 5px; }
+    .nav-links a:hover { color: var(--columbia-blue-dark); }
 
-    /* LISTS */
-    .link-list { list-style: none; }
-    .link-list li { margin-bottom: 1.2rem; display: flex; gap: 1rem; align-items: baseline; }
-    .link-list .num { color: var(--accent); font-weight: 200; font-size: 1.1rem; }
-    .link-list .link-title { text-decoration: none; color: var(--accent); font-weight: 300; font-size: 1.1rem; border-bottom: 1px solid transparent; }
-    .link-list .link-title:hover { color: var(--highlight); border-bottom: 1px solid var(--highlight); }
+    /* LAYOUT & CONTAINERS */
+    .container {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 3rem 2rem;
+    }
 
-    footer { text-align: center; color: var(--accent); font-size: 0.9rem; padding: 4rem 2rem 2rem; border-top: 1px solid #222; }
+    /* HERO SECTION */
+    header.hero {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-top: 4px solid var(--columbia-blue);
+      border-radius: 8px;
+      padding: 2.5rem;
+      margin-bottom: 3rem;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.02);
+    }
 
-    /* RESPONSIVE ADJUSTMENTS */
-    @media (max-width: 900px) {
-      .content-container { padding: 4rem 1rem; max-width: 100%; }
-      .section-num { position: static; display: block; margin-bottom: 0.5rem; }
-      h1.main-name { font-size: 2.2rem; }
-      h2.section-head { font-size: 1.8rem; }
-      .margin-text { display: none; }
+    h1 {
+      font-size: 2.25rem;
+      color: var(--navy);
+      font-weight: 700;
+      margin-bottom: 0.25rem;
+    }
+
+    .subtitle {
+      font-size: 1.1rem;
+      color: var(--columbia-blue-dark);
+      font-weight: 600;
+      margin-bottom: 1.25rem;
+    }
+
+    .contact-info {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1.5rem;
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      border-top: 1px solid var(--border);
+      padding-top: 1.25rem;
+      margin-top: 1.25rem;
+    }
+
+    .contact-info a {
+      color: var(--columbia-blue-dark);
+      text-decoration: none;
+    }
+
+    .contact-info a:hover { text-decoration: underline; }
+
+    /* SECTIONS */
+    section { margin-bottom: 3.5rem; }
+
+    h2.section-head {
+      font-size: 1.5rem;
+      color: var(--navy);
+      border-bottom: 2px solid var(--columbia-blue);
+      padding-bottom: 0.5rem;
+      margin-bottom: 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    /* CARDS & LISTS */
+    .card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 1.5rem;
+      margin-bottom: 1rem;
+    }
+
+    .card h3 {
+      font-size: 1.1rem;
+      color: var(--navy);
+      margin-bottom: 0.25rem;
+    }
+
+    .card .meta {
+      font-size: 0.85rem;
+      color: var(--columbia-blue-dark);
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+    }
+
+    .pill-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+
+    .pill {
+      background: #EFF6FF;
+      color: var(--navy);
+      border: 1px solid #DBEAFE;
+      padding: 0.4rem 0.8rem;
+      border-radius: 20px;
+      font-size: 0.9rem;
+      font-weight: 500;
+    }
+
+    .pub-item {
+      margin-bottom: 1.25rem;
+      padding-bottom: 1.25rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .pub-item:last-child { border-bottom: none; }
+
+    .pub-title {
+      font-weight: 600;
+      color: var(--navy);
+    }
+
+    .pub-journal {
+      font-style: italic;
+      color: var(--text-muted);
+    }
+
+    .award-tag {
+      display: inline-block;
+      background: #FEF3C7;
+      color: #92400E;
+      font-size: 0.75rem;
+      font-weight: 600;
+      padding: 0.1rem 0.5rem;
+      border-radius: 4px;
+      margin-top: 0.25rem;
+    }
+
+    footer {
+      text-align: center;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      padding: 2rem 0;
+      border-top: 1px solid var(--border);
+    }
+
+    @media (max-width: 640px) {
+      .nav-container { flex-direction: column; gap: 0.75rem; }
+      .contact-info { flex-direction: column; gap: 0.5rem; }
     }
   </style>
 </head>
 <body>
 
-  <div class="wrapper">
-    <!-- Vertical Margin Text -->
-    <div class="margin-text">New York City / Professor · Founder · Investor · Writer</div>
+  <!-- Streamlined Navigation -->
+  <nav>
+    <div class="nav-container">
+      <a href="#" class="nav-brand">Olivier Toubia</a>
+      <ul class="nav-links">
+        <li><a href="#about">About</a></li>
+        <li><a href="#research">Research</a></li>
+        <li><a href="#honors">Honors</a></li>
+        <li><a href="#publications">Publications</a></li>
+        <li><a href="#activity">Service</a></li>
+      </ul>
+    </div>
+  </nav>
 
-    <div class="content-container">
-      <!-- Header -->
-      <header>
-        <h1 class="main-name">YOUR NAME</h1>
-        <p class="main-titles">Professor · Founder · Investor · Writer</p>
-        <p class="intro-bio">
-          I do a lot of different things. Here are some of them. I teach, I build companies, I back founders, and I write. This is a small subset of the things that hold my attention.
-        </p>
-      </header>
+  <div class="container">
+    
+    <!-- Hero / Main Overview -->
+    <header class="hero" id="about">
+      <h1>Olivier Toubia</h1>
+      <div class="subtitle">Glaubinger Professor of Business · Columbia Business School</div>
+      <p>Senior Vice Dean for Curriculum and Instruction at Columbia Business School. Focusing on computational social science, innovation, preference measurement, and generative AI.</p>
+      
+      <div class="contact-info">
+        <span>📍 Room 925, Kravis Hall, 665 W 130th St, New York, NY 10027</span>
+        <span>📞 (212) 854 8243</span>
+        <span>✉️ <a href="mailto:ot2107@gsb.columbia.edu">ot2107@gsb.columbia.edu</a>[cite: 1]</span>
+        <span>🔗 <a href="https://www.linkedin.com/in/olivier-toubia-47273b4/" target="_blank">LinkedIn Profile</a>[cite: 1]</span>
+      </div>
+    </header>
 
-      <!-- 01 The long version -->
-      <section>
-        <div class="section-num">01</div>
-        <h2 class="section-head">The long version</h2>
-        <p class="section-desc">Placeholder text about your history and philosophy, matching the deep introduction seen in the original layout.</p>
-      </section>
+    <!-- Research Interests -->
+    <section id="research">
+      <h2 class="section-head">Research Interests</h2>
+      <div class="pill-list">
+        <span class="pill">Generative AI[cite: 1]</span>
+        <span class="pill">Innovation[cite: 1]</span>
+        <span class="pill">Idea Generation & Creativity[cite: 1]</span>
+        <span class="pill">Preference Measurement[cite: 1]</span>
+        <span class="pill">Computational Social Science[cite: 1]</span>
+      </div>
+    </section>
 
-      <!-- 02 Teaching -->
-      <section>
-        <div class="section-num">02</div>
-        <h2 class="section-head">Teaching</h2>
-        <p class="section-desc">Placeholder description of your teaching philosophy and experience at various institutions.</p>
-        <ul class="link-list">
-          <li><span class="num">01</span><a href="#" class="link-title">Placeholder Course Title A</a></li>
-          <li><span class="num">02</span><a href="#" class="link-title">Placeholder Course Title B</a></li>
-        </ul>
-      </section>
+    <!-- Current Leadership & Academic Appointments -->
+    <section>
+      <h2 class="section-head">Appointments & Leadership</h2>
+      <div class="card">
+        <h3>Senior Vice Dean for Curriculum and Instruction[cite: 1]</h3>
+        <div class="meta">2026 – Present · Columbia Business School[cite: 1]</div>
+      </div>
+      <div class="card">
+        <h3>Glaubinger Professor of Business[cite: 1]</h3>
+        <div class="meta">2012 – Present · Columbia Business School[cite: 1]</div>
+      </div>
+      <div class="card">
+        <h3>Editor-in-Chief & Editorial Roles[cite: 1]</h3>
+        <div class="meta">Marketing Science (Editor-in-Chief 2022–2024) · Journal of Marketing (Associate Editor 2025–Present)[cite: 1]</div>
+      </div>
+    </section>
 
-      <!-- 03 Building -->
-      <section>
-        <div class="section-num">03</div>
-        <h2 class="section-head">Building</h2>
-        <p class="section-desc">Companies I started because the existing way of doing things didn't make sense.</p>
-        <div class="grid">
-          <div class="card">
-            <h3>Placeholder Company</h3>
-            <p class="card-cat">Healthcare</p>
-            <p class="card-desc">Placeholder description of this company's mission and platform.</p>
-            <a href="https://example.com" target="_blank" class="action-link"><span>Visit Website</span></a>
-          </div>
-          <div class="card">
-            <h3>Placeholder Platform</h3>
-            <p class="card-cat">Education</p>
-            <p class="card-desc">Placeholder description of this learning platform.</p>
-            <a href="https://example.com" target="_blank" class="action-link"><span>Visit Website</span></a>
-          </div>
-        </div>
-      </section>
+    <!-- Selected Honors & Awards -->
+    <section id="honors">
+      <h2 class="section-head">Selected Honors & Awards</h2>
+      <div class="card">
+        <p>🏆 <strong>John Little Award Winner:</strong> Best marketing paper published in <em>Marketing Science</em> or <em>Management Science</em> (2003, 2006, 2017, 2018)[cite: 1].</p>
+      </div>
+      <div class="card">
+        <p>🏆 <strong>Long Term Impact Award Winner:</strong> Don Morrison Long Term Impact Award (2022)[cite: 1] & INFORMS ISMS Long Term Impact Award (2016)[cite: 1].</p>
+      </div>
+      <div class="card">
+        <p>🏆 <strong>Paul E. Green Award Winner:</strong> Best paper having potential for significant impact for marketing practice (2015)[cite: 1].</p>
+      </div>
+    </section>
 
-      <!-- 04 Investing -->
-      <section>
-        <div class="section-num">04</div>
-        <h2 class="section-head">Investing</h2>
-        <p class="section-desc">Founders I believed in early, across many sectors.</p>
-        <div class="tags">
-          <a href="#" class="tag">Placeholder1</a>
-          <a href="#" class="tag">Placeholder2</a>
-          <a href="#" class="tag">Placeholder3</a>
-          <a href="#" class="tag">Placeholder4</a>
-          <a href="#" class="tag">Placeholder5</a>
-        </div>
-      </section>
+    <!-- Selected Publications -->
+    <section id="publications">
+      <h2 class="section-head">Selected Publications</h2>
+      
+      <div class="pub-item">
+        <div class="pub-title">"Digital Twins are Funhouse Mirrors: Five Systematic Distortions"[cite: 1]</div>
+        <div class="pub-journal">Science Advances (2026, Forthcoming)[cite: 1]</div>
+      </div>
 
-      <!-- 05 Talks & speaking -->
-      <section>
-        <div class="section-num">05</div>
-        <h2 class="section-head">Talks & speaking</h2>
-        <p class="section-desc">I give talks. I like the hard questions after.</p>
-        <ul class="link-list">
-          <li><span class="num">01</span><a href="#" class="link-title">Placeholder Talk Title One</a></li>
-          <li><span class="num">02</span><a href="#" class="link-title">Placeholder Talk Title Two</a></li>
-        </ul>
-      </section>
+      <div class="pub-item">
+        <div class="pub-title">"Optimally Sequencing Semantic Search Predicts Creativity"[cite: 1]</div>
+        <div class="pub-journal">PLoS One (2026)[cite: 1]</div>
+      </div>
 
-      <!-- 06 Writing -->
-      <section>
-        <div class="section-num">06</div>
-        <h2 class="section-head">Writing</h2>
-        <p class="section-desc">Placeholder text about your publications or book.</p>
-        <a href="#" class="action-link"><span>Get the book</span></a>
-      </section>
+      <div class="pub-item">
+        <div class="pub-title">"The Topography of Thought"[cite: 1]</div>
+        <div class="pub-journal">PNAS Nexus (2024)[cite: 1]</div>
+      </div>
 
-      <!-- 07 Advising & coaching -->
-      <section>
-        <div class="section-num">07</div>
-        <h2 class="section-head">Advising & coaching</h2>
-        <p class="section-desc">I help founders and execs get unstuck. Growth, scaling, product, team.</p>
-      </section>
+      <div class="pub-item">
+        <div class="pub-title">"How Quantifying the Shape of Stories Predicts Their Success"[cite: 1]</div>
+        <div class="pub-journal">Proceedings of the National Academy of Sciences (2021)[cite: 1]</div>
+      </div>
 
-    </div><!-- Close Content Container -->
-  </div><!-- Close Wrapper -->
+      <div class="pub-item">
+        <div class="pub-title">"Idea Generation, Creativity, and Incentives"[cite: 1]</div>
+        <div class="pub-journal">Marketing Science (2006)[cite: 1]</div>
+        <span class="award-tag">Winner, John Little Award[cite: 1]</span>
+      </div>
+    </section>
+
+    <!-- Education -->
+    <section>
+      <h2 class="section-head">Education</h2>
+      <div class="card">
+        <h3>Ph.D. in Marketing (2004)[cite: 1]</h3>
+        <p class="meta">MIT Sloan School of Management[cite: 1]</p>
+      </div>
+      <div class="card">
+        <h3>S.M. in Operations Research (2001)[cite: 1]</h3>
+        <p class="meta">Massachusetts Institute of Technology[cite: 1]</p>
+      </div>
+      <div class="card">
+        <h3>Ingénieur (2000)[cite: 1]</h3>
+        <p class="meta">Ecole Centrale Paris[cite: 1]</p>
+      </div>
+    </section>
+
+  </div>
 
   <footer>
-    <p>Your Name, Made with curiosity in Your City · © 2026</p>
+    <p>© 2026 Olivier Toubia · Columbia Business School[cite: 1]</p>
   </footer>
 
 </body>
