@@ -5,17 +5,16 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Your Name – Professor · Founder · Investor · Writer</title>
   <style>
-    /* 1. DEFINE COLORS & TYPOGRAPHY - Cloned from image_0.png */
+    /* DEFINE COLORS & TYPOGRAPHY */
     :root {
       --bg: #000000;
       --text: #c0c0c0; /* Muted grey body text */
       --highlight: #ffffff; /* Stark white headings */
       --accent: #dcdcdc; /* Lighter grey accents */
       --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-      --font-serif: "Georgia", Times, serif; /* For special elements like "Say hello" */
     }
 
-    /* 2. BASE STYLES */
+    /* BASE STYLES */
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body {
       background-color: var(--bg);
@@ -29,7 +28,7 @@
     .wrapper { max-width: 1400px; margin: 0 auto; display: flex; position: relative; }
     .content-container { max-width: 900px; margin: 0 auto; padding: 4rem 2rem; position: relative; z-index: 1; }
 
-    /* 3. VERTICAL MARGIN TEXT - Replica of original site's vertical bar */
+    /* VERTICAL MARGIN TEXT */
     .margin-text {
       position: absolute;
       right: 20px;
@@ -43,19 +42,19 @@
       z-index: 0;
     }
 
-    /* 4. HEADERS */
+    /* HEADERS */
     header { margin-bottom: 5rem; }
     h1.main-name { font-size: 3rem; font-weight: 200; color: var(--highlight); margin-bottom: 0.5rem; letter-spacing: -1px; }
     .main-titles { font-size: 1rem; color: var(--accent); letter-spacing: 1px; font-weight: 400; margin-bottom: 2rem; }
     .intro-bio { font-size: 1.2rem; line-height: 1.8; max-width: 700px; }
 
-    /* 5. SECTIONS 01-07 */
+    /* SECTIONS 01-07 */
     section { margin-bottom: 6rem; position: relative; }
     .section-num { font-size: 1.5rem; color: var(--accent); position: absolute; left: -2.5rem; top: -0.1rem; font-weight: 200; }
     h2.section-head { font-size: 2.2rem; font-weight: 200; color: var(--highlight); margin-bottom: 2.5rem; letter-spacing: -1px; }
     p.section-desc { font-size: 1rem; color: var(--text); max-width: 650px; margin-bottom: 2rem; }
 
-    /* 6. LAYOUT GRIDS (Building, Investing) */
+    /* LAYOUT GRIDS (Building, Investing) */
     .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; }
     .card { background: transparent; padding: 1.5rem; border: 1px solid var(--accent); }
     .card h3 { font-size: 1.2rem; font-weight: 300; color: var(--highlight); margin-bottom: 0.5rem; }
@@ -67,60 +66,35 @@
     .tag { font-size: 0.9rem; color: var(--text); text-decoration: none; border-bottom: 1px solid transparent; }
     .tag:hover { color: var(--highlight); border-bottom: 1px solid var(--highlight); }
 
-    /* Links - Replica of original "Visit →" */
+    /* Links */
     .action-link { display: inline-flex; align-items: center; text-decoration: none; color: var(--accent); font-weight: 300; font-size: 1rem; }
     .action-link span { border-bottom: 1px solid var(--accent); transition: border-color 0.2s; }
     .action-link:hover span { color: var(--highlight); border-color: var(--highlight); }
     .action-link:after { content: " →"; font-size: 1.2rem; margin-left: 5px; }
 
-    /* 7. TALKS / SPEAKING / WRITING List */
+    /* LISTS */
     .link-list { list-style: none; }
     .link-list li { margin-bottom: 1.2rem; display: flex; gap: 1rem; align-items: baseline; }
     .link-list .num { color: var(--accent); font-weight: 200; font-size: 1.1rem; }
     .link-list .link-title { text-decoration: none; color: var(--accent); font-weight: 300; font-size: 1.1rem; border-bottom: 1px solid transparent; }
     .link-list .link-title:hover { color: var(--highlight); border-bottom: 1px solid var(--highlight); }
 
-    /* 8. SAY HELLO & CONTACT FORM */
-    .contact-container { display: flex; flex-wrap: wrap; gap: 3rem; margin-top: 2rem; border-top: 1px solid var(--accent); padding-top: 3rem; }
-    .contact-info { flex: 1; min-width: 300px; }
-    .say-hello { font-family: var(--font-serif); font-style: italic; font-size: 3rem; color: var(--highlight); margin-bottom: 1rem; }
-    .contact-prompt { font-size: 1.2rem; color: var(--text); margin-bottom: 2rem; }
-    .contact-links { list-style: none; display: flex; flex-direction: column; gap: 0.75rem; }
-    .contact-links a { color: var(--accent); text-decoration: none; font-size: 1rem; }
-    .contact-links a:hover { color: var(--highlight); text-decoration: underline; }
+    footer { text-align: center; color: var(--accent); font-size: 0.9rem; padding: 4rem 2rem 2rem; border-top: 1px solid #222; }
 
-    form { flex: 1; min-width: 300px; border: 1px solid var(--accent); padding: 2rem; position: relative; }
-    /* Subtle hover effect on the form */
-    form:hover { border-color: var(--highlight); }
-    label { font-size: 0.9rem; color: var(--accent); font-weight: 400; margin-bottom: 0.5rem; display: block; }
-    input, textarea {
-      width: 100%; background: transparent; border: 1px solid var(--accent); color: var(--highlight);
-      padding: 0.75rem; border-radius: 0; font-family: inherit; font-size: 1rem; margin-bottom: 1.5rem;
-    }
-    input:focus, textarea:focus { outline: 1px solid var(--highlight); border-color: var(--highlight); }
-    button {
-      background: transparent; color: var(--highlight); font-weight: 400; border: 1px solid var(--highlight);
-      padding: 0.75rem 1.5rem; border-radius: 0; cursor: pointer; transition: 0.2s; font-size: 1rem;
-    }
-    button:hover { background: var(--highlight); color: var(--bg); }
-
-    footer { text-align: center; color: var(--accent); font-size: 0.9rem; padding: 4rem 2rem; }
-
-    /* 9. RESPONSIVE ADJUSTMENTS */
+    /* RESPONSIVE ADJUSTMENTS */
     @media (max-width: 900px) {
       .content-container { padding: 4rem 1rem; max-width: 100%; }
       .section-num { position: static; display: block; margin-bottom: 0.5rem; }
       h1.main-name { font-size: 2.2rem; }
       h2.section-head { font-size: 1.8rem; }
-      .say-hello { font-size: 2.2rem; }
-      .margin-text { display: none; } /* Hide vertical text on mobile */
+      .margin-text { display: none; }
     }
   </style>
 </head>
 <body>
 
   <div class="wrapper">
-    <!-- Vertical Margin Text - Cloned from image_0.png -->
+    <!-- Vertical Margin Text -->
     <div class="margin-text">New York City / Professor · Founder · Investor · Writer</div>
 
     <div class="content-container">
@@ -137,7 +111,7 @@
       <section>
         <div class="section-num">01</div>
         <h2 class="section-head">The long version</h2>
-        <p class="section-desc">Placeholder text about your history and philosophy, matching the deep introduction seen in the original image. Mention your background and what drives you.</p>
+        <p class="section-desc">Placeholder text about your history and philosophy, matching the deep introduction seen in the original layout.</p>
       </section>
 
       <!-- 02 Teaching -->
@@ -160,13 +134,13 @@
           <div class="card">
             <h3>Placeholder Company</h3>
             <p class="card-cat">Healthcare</p>
-            <p class="card-desc">Placeholder description of this company's mission and accessible treatment platform.</p>
+            <p class="card-desc">Placeholder description of this company's mission and platform.</p>
             <a href="https://example.com" target="_blank" class="action-link"><span>Visit Website</span></a>
           </div>
           <div class="card">
             <h3>Placeholder Platform</h3>
             <p class="card-cat">Education</p>
-            <p class="card-desc">Placeholder description of this accelerated learning platform and its core bet.</p>
+            <p class="card-desc">Placeholder description of this learning platform.</p>
             <a href="https://example.com" target="_blank" class="action-link"><span>Visit Website</span></a>
           </div>
         </div>
@@ -201,7 +175,7 @@
       <section>
         <div class="section-num">06</div>
         <h2 class="section-head">Writing</h2>
-        <p class="section-desc">Placeholder text about your publications or upcoming book, matching the original layout.</p>
+        <p class="section-desc">Placeholder text about your publications or book.</p>
         <a href="#" class="action-link"><span>Get the book</span></a>
       </section>
 
@@ -211,33 +185,6 @@
         <h2 class="section-head">Advising & coaching</h2>
         <p class="section-desc">I help founders and execs get unstuck. Growth, scaling, product, team.</p>
       </section>
-
-      <!-- Say Hello / Contact Section -->
-      <div class="contact-container">
-        <div class="contact-info">
-          <div class="say-hello">Say hello</div>
-          <p class="contact-prompt">Working on something interesting? Let's talk.</p>
-          <ul class="contact-links">
-            <li><a href="#">LinkedIn →</a></li>
-            <li><a href="#">Book a talk</a></li>
-            <li><a href="#">Advising inquiries</a></li>
-          </ul>
-        </div>
-        
-        <!-- Replica Form -->
-        <form action="https://api.web3forms.com/submit" method="POST">
-          <input type="hidden" name="access_key" value="YOUR_ACCESS_KEY_HERE">
-          <div>
-            <label for="name">Name</label>
-            <input type="text" id="name" name="name" required placeholder="">
-          </div>
-          <div>
-            <label for="message">Message</label>
-            <textarea id="message" name="message" rows="4" required placeholder=""></textarea>
-          </div>
-          <button type="submit">Send message →</button>
-        </form>
-      </div>
 
     </div><!-- Close Content Container -->
   </div><!-- Close Wrapper -->
