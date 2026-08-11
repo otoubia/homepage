@@ -26,8 +26,28 @@
   hr { border: none; border-top: 1px solid #d0d7de; margin: 3em 0; }
   a { color: #003DA5; text-decoration: none; }
   a:hover { text-decoration: underline; }
+  /* ── step checkboxes ── */
+  .step-check { display: flex; align-items: center; gap: 10px; margin-top: 18px; cursor: pointer; font-size: .88em; font-weight: 600; color: #2da44e; user-select: none; }
+  .step-check input[type="checkbox"] { width: 18px; height: 18px; accent-color: #2da44e; cursor: pointer; flex-shrink: 0; }
+  /* ── completion box ── */
+  #completion-box { display: none; margin-top: 2.5em; padding: 28px 32px; background: #f0fff4; border: 2px solid #2da44e; border-radius: 12px; text-align: center; }
+  #completion-box.visible { display: block; }
+  #completion-box .done-title { font-size: 1.25em; font-weight: 700; color: #2da44e; margin-bottom: .4em; }
+  #completion-box .done-sub { font-size: .95em; color: #57606a; margin-bottom: 1.2em; }
+  .share-row { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
+  #github-url { padding: 8px 12px; border: 1px solid #d0d7de; border-radius: 6px; font-size: .9em; width: 300px; }
+  #share-btn { background: #003DA5; color: #fff; border: none; padding: 9px 20px; border-radius: 6px; font-size: .9em; font-weight: 600; cursor: pointer; }
+  #share-btn:hover { background: #0047c0; }
+  #copy-confirm { font-size: .85em; color: #2da44e; margin-top: 8px; display: none; }
 </style>
-</head>
+<!-- Google tag (gtag.js) — replace G-XXXXXXXXXX with your GA4 Measurement ID -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-XXXXXXXXXX');
+</script></head>
 <body>
 <div style="margin-bottom: 2em;">
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 134 57" width="200" height="85" aria-label="Columbia Business School">
@@ -94,5 +114,88 @@ Display the file in a window within the chat that makes it easy to copy and past
 
 
 
+
+<div id="completion-box">
+  <p class="done-title">All done — your page is live!</p>
+  <p class="done-sub">Paste your GitHub Pages URL below and share it with classmates.</p>
+  <div class="share-row">
+    <input type="text" id="github-url" placeholder="https://yourusername.github.io/home_page">
+    <button id="share-btn">Copy link</button>
+  </div>
+  <p id="copy-confirm">Copied to clipboard!</p>
+</div>
+
+<script>
+(function () {
+  var TOTAL = 8;
+  var ol = document.querySelector('ol');
+  if (!ol) return;
+
+  // Inject a checkbox at the bottom of each step <li>
+  var items = ol.querySelectorAll('li');
+  items.forEach(function (li, i) {
+    var step = i + 1;
+    var label = document.createElement('label');
+    label.className = 'step-check';
+    var cb = document.createElement('input');
+    cb.type = 'checkbox';
+    cb.dataset.step = step;
+    if (localStorage.getItem('step_' + step) === '1') cb.checked = true;
+    label.appendChild(cb);
+    label.appendChild(document.createTextNode(' Mark step ' + step + ' as complete'));
+    li.appendChild(label);
+  });
+
+  function checkCompletion() {
+    var checks = ol.querySelectorAll('input[type="checkbox"]');
+    var done = [].filter.call(checks, function (c) { return c.checked; }).length;
+    var box = document.getElementById('completion-box');
+    if (done >= TOTAL) {
+      box.classList.add('visible');
+      if (done === TOTAL && typeof gtag === 'function') {
+        gtag('event', 'orientation_complete');
+      }
+    } else {
+      box.classList.remove('visible');
+    }
+  }
+
+  checkCompletion(); // restore UI on page load
+
+  ol.addEventListener('change', function (e) {
+    if (!e.target || !e.target.dataset.step) return;
+    var step = e.target.dataset.step;
+    localStorage.setItem('step_' + step, e.target.checked ? '1' : '0');
+    if (e.target.checked && typeof gtag === 'function') {
+      gtag('event', 'step_complete', { step_number: parseInt(step) });
+    }
+    checkCompletion();
+  });
+
+  var shareBtn = document.getElementById('share-btn');
+  if (shareBtn) shareBtn.addEventListener('click', function () {
+    var url = document.getElementById('github-url').value.trim();
+    if (!url) return;
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(url).then(function () {
+        var c = document.getElementById('copy-confirm');
+        c.style.display = 'block';
+        setTimeout(function () { c.style.display = 'none'; }, 2500);
+      });
+    } else {
+      // fallback for older browsers
+      var ta = document.createElement('textarea');
+      ta.value = url;
+      document.body.appendChild(ta);
+      ta.select();
+      document.execCommand('copy');
+      document.body.removeChild(ta);
+      var c = document.getElementById('copy-confirm');
+      c.style.display = 'block';
+      setTimeout(function () { c.style.display = 'none'; }, 2500);
+    }
+  });
+})();
+</script>
 </body>
 </html>
