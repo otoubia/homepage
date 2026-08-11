@@ -42,11 +42,7 @@
   #completion-box.visible { display: block; }
   #completion-box .done-title { font-size: 1.25em; font-weight: 700; color: #2da44e; margin-bottom: .4em; }
   #completion-box .done-sub { font-size: .95em; color: #57606a; margin-bottom: 1.2em; }
-  .share-row { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
-  #github-url { padding: 8px 12px; border: 1px solid #d0d7de; border-radius: 6px; font-size: .9em; width: 300px; }
-  #share-btn { background: #003DA5; color: #fff; border: none; padding: 9px 20px; border-radius: 6px; font-size: .9em; font-weight: 600; cursor: pointer; }
-  #share-btn:hover { background: #0047c0; }
-  #copy-confirm { font-size: .85em; color: #2da44e; margin-top: 8px; display: none; }
+
 </style></head>
 <body>
 <div style="margin-bottom: 2em;">
@@ -116,13 +112,8 @@ Display the file in a window within the chat that makes it easy to copy and past
 
 
 <div id="completion-box">
-  <p class="done-title">All done — your page is live!</p>
-  <p class="done-sub">Paste your GitHub Pages URL below (optional).</p>
-  <div class="share-row">
-    <input type="text" id="github-url" placeholder="https://yourusername.github.io/home_page">
-    <button id="share-btn">Copy link</button>
-  </div>
-  <p id="copy-confirm">Copied to clipboard!</p>
+  <p class="done-title">Congratulations — your page is live!</p>
+  <p class="done-sub">You do not need to submit your URL. You are all set!</p>
 </div>
 
 <script>
@@ -172,29 +163,7 @@ Display the file in a window within the chat that makes it easy to copy and past
     checkCompletion();
   });
 
-  var shareBtn = document.getElementById('share-btn');
-  if (shareBtn) shareBtn.addEventListener('click', function () {
-    var url = document.getElementById('github-url').value.trim();
-    if (!url) return;
-    if (navigator.clipboard && navigator.clipboard.writeText) {
-      navigator.clipboard.writeText(url).then(function () {
-        var c = document.getElementById('copy-confirm');
-        c.style.display = 'block';
-        setTimeout(function () { c.style.display = 'none'; }, 2500);
-      });
-    } else {
-      // fallback for older browsers
-      var ta = document.createElement('textarea');
-      ta.value = url;
-      document.body.appendChild(ta);
-      ta.select();
-      document.execCommand('copy');
-      document.body.removeChild(ta);
-      var c = document.getElementById('copy-confirm');
-      c.style.display = 'block';
-      setTimeout(function () { c.style.display = 'none'; }, 2500);
-    }
-  });
+
 })();
 </script>
 </body>
