@@ -42,6 +42,12 @@
   #completion-box.visible { display: block; }
   #completion-box .done-title { font-size: 1.25em; font-weight: 700; color: #2da44e; margin-bottom: .4em; }
   #completion-box .done-sub { font-size: .95em; color: #57606a; margin-bottom: 1.2em; }
+  #url-form { margin-top: 1.2em; display: flex; flex-direction: column; align-items: center; gap: .7em; }
+  #url-form label { font-size: .9em; color: #57606a; }
+  #url-input { width: 100%; max-width: 420px; padding: 8px 12px; border: 1px solid #ccc; border-radius: 6px; font-size: .95em; }
+  #url-submit { padding: 8px 24px; background: #2da44e; color: #fff; border: none; border-radius: 6px; font-size: .95em; font-weight: 600; cursor: pointer; }
+  #url-submit:hover { background: #218838; }
+  #url-feedback { font-size: .9em; margin-top: .4em; }
 
 </style></head>
 <body>
@@ -113,7 +119,12 @@ Display the file in a window within the chat that makes it easy to copy and past
 
 <div id="completion-box">
   <p class="done-title">Congratulations — your page is live!</p>
-
+  <div id="url-form">
+    <label for="url-input">Share your page URL so we can celebrate your work:</label>
+    <input id="url-input" type="url" placeholder="https://yourusername.github.io/home_page" />
+    <button id="url-submit" type="button">Submit</button>
+    <p id="url-feedback"></p>
+  </div>
 </div>
 
 <script>
@@ -163,6 +174,42 @@ Display the file in a window within the chat that makes it easy to copy and past
     checkCompletion();
   });
 
+  // Supabase URL submission
+  var SUPABASE_URL = 'https://isrcwhckbwrsqijpstvq.supabase.co';
+  var SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImlzcmN3aGNrYndyc3FpanBzdHZxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODY5OTI2OTksImV4cCI6MjEwMjU2ODY5OX0.YlGXuqnEHtoAlUr5lO3mp7F0YMaYQ-fRtRsHXexMF6o';
+
+  document.getElementById('url-submit').addEventListener('click', function () {
+    var input = document.getElementById('url-input');
+    var feedback = document.getElementById('url-feedback');
+    var url = input.value.trim();
+    if (!url) { feedback.style.color = '#c00'; feedback.textContent = 'Please enter your URL first.'; return; }
+    this.disabled = true;
+    feedback.style.color = '#57606a';
+    feedback.textContent = 'Submitting…';
+    fetch(SUPABASE_URL + '/rest/v1/submissions', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'apikey': SUPABASE_ANON_KEY,
+        'Authorization': 'Bearer ' + SUPABASE_ANON_KEY,
+        'Prefer': 'return=minimal'
+      },
+      body: JSON.stringify({ url: url })
+    }).then(function (res) {
+      if (res.ok) {
+        feedback.style.color = '#2da44e';
+        feedback.textContent = 'Thank you! Your page has been shared.';
+        input.disabled = true;
+        document.getElementById('url-submit').style.display = 'none';
+      } else {
+        return res.text().then(function (t) { throw new Error(t); });
+      }
+    }).catch(function () {
+      feedback.style.color = '#c00';
+      feedback.textContent = 'Something went wrong — please try again.';
+      document.getElementById('url-submit').disabled = false;
+    });
+  });
 
 })();
 </script>
