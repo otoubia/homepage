@@ -169,7 +169,7 @@ Display the file in a window within the chat that makes it easy to copy and past
     var step = e.target.dataset.step;
     localStorage.setItem('step_' + step, e.target.checked ? '1' : '0');
     if (e.target.checked && typeof gtag === 'function') {
-      gtag('event', 'step_complete', { step_number: parseInt(step) });
+      gtag('event', 'step' + step + '_complete');
     }
     checkCompletion();
   });
