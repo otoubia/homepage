@@ -48,6 +48,8 @@
   #url-submit { padding: 8px 24px; background: #2da44e; color: #fff; border: none; border-radius: 6px; font-size: .95em; font-weight: 600; cursor: pointer; }
   #url-submit:hover { background: #218838; }
   #url-feedback { font-size: .9em; margin-top: .4em; }
+  #reset-btn { margin-top: 1.8em; background: none; border: 1px solid #ccc; border-radius: 6px; padding: 5px 14px; font-size: .82em; color: #888; cursor: pointer; }
+  #reset-btn:hover { border-color: #999; color: #555; }
 
 </style></head>
 <body>
@@ -117,6 +119,8 @@ Display the file in a window within the chat that makes it easy to copy and past
 
 
 
+<button id="reset-btn" type="button">Reset progress</button>
+
 <div id="completion-box">
   <p class="done-title">Congratulations — your page is live!</p>
   <div id="url-form">
@@ -171,6 +175,12 @@ Display the file in a window within the chat that makes it easy to copy and past
     if (e.target.checked && typeof gtag === 'function') {
       gtag('event', 'step' + step + '_complete');
     }
+    checkCompletion();
+  });
+
+  document.getElementById('reset-btn').addEventListener('click', function () {
+    for (var i = 1; i <= TOTAL; i++) localStorage.removeItem('step_' + i);
+    ol.querySelectorAll('input[type="checkbox"]').forEach(function (cb) { cb.checked = false; });
     checkCompletion();
   });
 
