@@ -199,6 +199,7 @@ Display the file in a window within the chat that makes it easy to copy and past
       if (res.ok) {
         feedback.style.color = '#2da44e';
         feedback.textContent = 'Thank you! Your page has been shared.';
+        if (typeof gtag === 'function') gtag('event', 'url_submitted');
         input.disabled = true;
         document.getElementById('url-submit').style.display = 'none';
       } else {
