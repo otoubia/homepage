@@ -1,1 +1,403 @@
 
+<!-- CBS Brand Typography: Neue Haas Grotesk via Adobe Web Fonts / Alternative Fallbacks -->
+<link rel="stylesheet" href="https://use.typekit.net/qvj2oee.css">
+
+<style>
+  :root {
+    /* Official CBS Color Palette */
+    --primary-blue: #009BDB;   /* CBS Blue / Blue 40 */
+    --primary-dark: #181A1C;   /* Cool Gray 90 */
+    --primary-accent: #006088; /* Blue 70 */
+    --bg-light: #F8FAFB;       /* Cool Gray 5 */
+    --card-bg: #FFFFFF;
+    --text-main: #181A1C;     /* Cool Gray 90 */
+    --text-muted: #687078;    /* Cool Gray 70 */
+    --border-color: #E3E8EE;  /* Cool Gray 20 */
+    --highlight-bg: #F1F4F7;  /* Cool Gray 10 */
+    --sidebar-width: 280px;
+  }
+
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    font-family: "neue-haas-grotesk-text", "Helvetica Neue", Arial, sans-serif;
+    color: var(--text-main);
+    background-color: var(--bg-light);
+    line-height: 1.5;
+    display: flex;
+    min-height: 100vh;
+  }
+
+  /* Sidebar Navigation */
+  .sidebar {
+    width: var(--sidebar-width);
+    background-color: var(--primary-dark);
+    color: #FFFFFF;
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 2.5rem 1.5rem;
+    z-index: 100;
+    overflow-y: auto;
+  }
+
+  .profile-header {
+    text-align: left;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+    padding-bottom: 1.5rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .profile-header h1 {
+    font-family: "neue-haas-grotesk-display", "Helvetica Neue", Arial, sans-serif;
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #FFFFFF;
+    margin-bottom: 0.3rem;
+    letter-spacing: -0.01em;
+  }
+
+  .profile-header p {
+    font-size: 0.85rem;
+    color: var(--primary-blue);
+    font-weight: 500;
+  }
+
+  .nav-links {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .nav-links a {
+    color: #E3E8EE;
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-weight: 500;
+    padding: 0.6rem 0.8rem;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    transition: all 0.2s ease;
+  }
+
+  .nav-links a:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+    color: var(--primary-blue);
+  }
+
+  .sidebar-footer {
+    border-top: 1px solid rgba(255, 255, 255, 0.15);
+    padding-top: 1.2rem;
+    font-size: 0.8rem;
+    color: #BEC7D0;
+  }
+
+  .sidebar-footer a {
+    color: var(--primary-blue);
+    text-decoration: none;
+  }
+
+  /* Main Content */
+  .main-content {
+    margin-left: var(--sidebar-width);
+    flex: 1;
+    padding: 3rem 4rem;
+    max-width: 1100px;
+  }
+
+  section {
+    margin-bottom: 3.5rem;
+    scroll-margin-top: 2rem;
+  }
+
+  .section-title {
+    font-family: "neue-haas-grotesk-display", "Helvetica Neue", Arial, sans-serif;
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--primary-dark);
+    border-bottom: 2px solid var(--primary-blue);
+    padding-bottom: 0.4rem;
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  /* Hero / Contact Card */
+  .hero-card {
+    background-color: var(--primary-dark);
+    color: white;
+    padding: 2.5rem;
+    border-radius: 4px;
+    margin-bottom: 3rem;
+  }
+
+  .hero-card h2 {
+    font-family: "neue-haas-grotesk-display", "Helvetica Neue", Arial, sans-serif;
+    font-size: 2rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+  }
+
+  .hero-card .title {
+    font-size: 1.05rem;
+    color: var(--primary-blue);
+    font-weight: 500;
+    margin-bottom: 1.5rem;
+  }
+
+  .contact-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1rem;
+    font-size: 0.9rem;
+    background: rgba(255, 255, 255, 0.08);
+    padding: 1.2rem;
+    border-radius: 4px;
+  }
+
+  .contact-item {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+  }
+
+  .contact-item a {
+    color: white;
+    text-decoration: none;
+  }
+
+  .contact-item a:hover {
+    text-decoration: underline;
+  }
+
+  /* Employment Cards */
+  .timeline {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .timeline-card {
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-left: 4px solid var(--primary-blue);
+    padding: 1.2rem 1.5rem;
+    border-radius: 4px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+  }
+
+  .timeline-card .role {
+    font-weight: 600;
+    font-size: 1.05rem;
+    color: var(--primary-dark);
+  }
+
+  .timeline-card .institution {
+    color: var(--text-muted);
+    font-size: 0.9rem;
+  }
+
+  .timeline-card .year {
+    background-color: var(--highlight-bg);
+    color: var(--primary-accent);
+    font-weight: 600;
+    font-size: 0.85rem;
+    padding: 0.3rem 0.8rem;
+    border-radius: 4px;
+    white-space: nowrap;
+  }
+
+  /* Education Grid */
+  .education-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.2rem;
+  }
+
+  .edu-card {
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    padding: 1.2rem;
+    border-radius: 4px;
+  }
+
+  .edu-card .degree {
+    font-weight: 600;
+    color: var(--primary-dark);
+    margin-bottom: 0.3rem;
+  }
+
+  .edu-card .school {
+    font-size: 0.9rem;
+    color: var(--text-muted);
+  }
+
+  .edu-card .year {
+    font-size: 0.85rem;
+    color: var(--primary-accent);
+    font-weight: 600;
+    margin-top: 0.5rem;
+  }
+
+  /* Research Tags */
+  .tag-cloud {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+  }
+
+  .tag {
+    background-color: var(--highlight-bg);
+    color: var(--primary-dark);
+    padding: 0.4rem 0.9rem;
+    border-radius: 4px;
+    font-size: 0.88rem;
+    font-weight: 500;
+    border: 1px solid var(--border-color);
+  }
+
+  /* Honors List */
+  .honors-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .honors-list li {
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    padding: 0.9rem 1.2rem;
+    border-radius: 4px;
+    font-size: 0.92rem;
+    display: flex;
+    align-items: flex-start;
+    gap: 0.8rem;
+  }
+
+  .honors-list li i {
+    color: var(--primary-blue);
+    margin-top: 0.2rem;
+  }
+
+  /* Professional Activities */
+  .activity-group {
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    padding: 1.5rem;
+    margin-bottom: 1rem;
+  }
+
+  .activity-group h3 {
+    font-family: "neue-haas-grotesk-display", "Helvetica Neue", Arial, sans-serif;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--primary-dark);
+    margin-bottom: 1rem;
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 0.5rem;
+  }
+
+  /* Publications */
+  .pub-card {
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    padding: 1.2rem;
+    border-radius: 4px;
+    margin-bottom: 1rem;
+    transition: border-color 0.2s ease;
+  }
+
+  .pub-card:hover {
+    border-color: var(--primary-blue);
+  }
+
+  .pub-authors {
+    font-size: 0.88rem;
+    color: var(--text-muted);
+    margin-bottom: 0.3rem;
+  }
+
+  .pub-title {
+    font-weight: 600;
+    font-size: 1rem;
+    color: var(--primary-dark);
+    margin-bottom: 0.4rem;
+  }
+
+  .pub-journal {
+    font-style: italic;
+    font-size: 0.88rem;
+    color: var(--primary-accent);
+  }
+
+  .badge-winner {
+    display: inline-block;
+    background-color: #D8F2FD; /* Blue 5 */
+    color: #004351;           /* Blue 80 */
+    font-size: 0.78rem;
+    font-weight: 600;
+    padding: 0.2rem 0.6rem;
+    border-radius: 4px;
+    margin-top: 0.5rem;
+    margin-right: 0.4rem;
+  }
+
+  .badge-finalist {
+    display: inline-block;
+    background-color: var(--highlight-bg);
+    color: var(--primary-dark);
+    border: 1px solid var(--border-color);
+    font-size: 0.78rem;
+    font-weight: 600;
+    padding: 0.2rem 0.6rem;
+    border-radius: 4px;
+    margin-top: 0.5rem;
+    margin-right: 0.4rem;
+  }
+
+  /* Disclosure Box */
+  .disclosure-box {
+    background-color: var(--highlight-bg);
+    border-left: 4px solid var(--primary-blue);
+    padding: 1.2rem;
+    border-radius: 4px;
+    font-size: 0.92rem;
+    color: var(--text-main);
+  }
+
+  /* Mobile Adaptability */
+  @media (max-width: 900px) {
+    body {
+      flex-direction: column;
+    }
+    .sidebar {
+      width: 100%;
+      position: relative;
+      height: auto;
+    }
+    .main-content {
+      margin-left: 0;
+      padding: 2rem 1.5rem;
+    }
+  }
+</style>
