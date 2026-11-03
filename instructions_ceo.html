@@ -1,6 +1,14 @@
 ﻿<!DOCTYPE html>
 <html lang="en">
 <head>
+<!-- Google tag (gtag.js) — Measurement ID: G-XR89LRN5Y1 -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-XR89LRN5Y1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-XR89LRN5Y1');
+</script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Publishing Your Home Page on GitHub</title>
@@ -26,6 +34,23 @@
   hr { border: none; border-top: 1px solid #d0d7de; margin: 3em 0; }
   a { color: #003DA5; text-decoration: none; }
   a:hover { text-decoration: underline; }
+  /* ── step checkboxes ── */
+  .step-check { display: flex; align-items: center; gap: 10px; margin-top: 18px; cursor: pointer; font-size: .88em; font-weight: 600; color: #2da44e; user-select: none; }
+  .step-check input[type="checkbox"] { width: 18px; height: 18px; accent-color: #2da44e; cursor: pointer; flex-shrink: 0; }
+  /* ── completion box ── */
+  #completion-box { display: none; margin-top: 2.5em; padding: 28px 32px; background: #f0fff4; border: 2px solid #2da44e; border-radius: 12px; text-align: center; }
+  #completion-box.visible { display: block; }
+  #completion-box .done-title { font-size: 1.25em; font-weight: 700; color: #2da44e; margin-bottom: .4em; }
+  #completion-box .done-sub { font-size: .95em; color: #57606a; margin-bottom: 1.2em; }
+  #url-form { margin-top: 1.2em; display: flex; flex-direction: column; align-items: center; gap: .7em; }
+  #url-form label { font-size: .9em; color: #57606a; }
+  #url-input { width: 100%; max-width: 420px; padding: 8px 12px; border: 1px solid #ccc; border-radius: 6px; font-size: .95em; }
+  #url-submit { padding: 8px 24px; background: #2da44e; color: #fff; border: none; border-radius: 6px; font-size: .95em; font-weight: 600; cursor: pointer; }
+  #url-submit:hover { background: #218838; }
+  #url-feedback { font-size: .9em; margin-top: .4em; }
+  #reset-btn { margin-top: 1.8em; background: none; border: 1px solid #ccc; border-radius: 6px; padding: 5px 14px; font-size: .82em; color: #888; cursor: pointer; }
+  #reset-btn:hover { border-color: #999; color: #555; }
+
 </style>
 </head>
 <body>
@@ -94,5 +119,110 @@ Display the file in a window within the chat that makes it easy to copy and past
 
 
 
+<button id="reset-btn" type="button">Reset progress</button>
+
+<div id="completion-box">
+  <p class="done-title">Congratulations — your page is live!</p>
+  <div id="url-form">
+    <label for="url-input">Optional: share your page URL (personal information will NOT be shared without your consent):</label>
+    <input id="url-input" type="url" placeholder="https://yourusername.github.io/home_page" />
+    <button id="url-submit" type="button">Submit</button>
+    <p id="url-feedback"></p>
+  </div>
+</div>
+
+<script>
+(function () {
+  var TOTAL = 8;
+  var ol = document.querySelector('ol');
+  if (!ol) return;
+
+  // Inject a checkbox at the bottom of each step <li>
+  var items = ol.querySelectorAll('li');
+  items.forEach(function (li, i) {
+    var step = i + 1;
+    var label = document.createElement('label');
+    label.className = 'step-check';
+    var cb = document.createElement('input');
+    cb.type = 'checkbox';
+    cb.dataset.step = step;
+    if (localStorage.getItem('ceo_step_' + step) === '1') cb.checked = true;
+    label.appendChild(cb);
+    label.appendChild(document.createTextNode(' Mark step ' + step + ' as complete'));
+    li.appendChild(label);
+  });
+
+  function checkCompletion() {
+    var checks = ol.querySelectorAll('input[type="checkbox"]');
+    var done = [].filter.call(checks, function (c) { return c.checked; }).length;
+    var box = document.getElementById('completion-box');
+    if (done >= TOTAL) {
+      box.classList.add('visible');
+      if (done === TOTAL && typeof gtag === 'function') {
+        gtag('event', 'ceo_orientation_complete');
+      }
+    } else {
+      box.classList.remove('visible');
+    }
+  }
+
+  checkCompletion(); // restore UI on page load
+
+  ol.addEventListener('change', function (e) {
+    if (!e.target || !e.target.dataset.step) return;
+    var step = e.target.dataset.step;
+    localStorage.setItem('ceo_step_' + step, e.target.checked ? '1' : '0');
+    if (e.target.checked && typeof gtag === 'function') {
+      gtag('event', 'ceo_step' + step + '_complete');
+    }
+    checkCompletion();
+  });
+
+  document.getElementById('reset-btn').addEventListener('click', function () {
+    for (var i = 1; i <= TOTAL; i++) localStorage.removeItem('ceo_step_' + i);
+    ol.querySelectorAll('input[type="checkbox"]').forEach(function (cb) { cb.checked = false; });
+    checkCompletion();
+  });
+
+  // Supabase URL submission
+  var SUPABASE_URL = 'https://isrcwhckbwrsqijpstvq.supabase.co';
+  var SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImlzcmN3aGNrYndyc3FpanBzdHZxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODY5OTI2OTksImV4cCI6MjEwMjU2ODY5OX0.YlGXuqnEHtoAlUr5lO3mp7F0YMaYQ-fRtRsHXexMF6o';
+
+  document.getElementById('url-submit').addEventListener('click', function () {
+    var input = document.getElementById('url-input');
+    var feedback = document.getElementById('url-feedback');
+    var url = input.value.trim();
+    if (!url) { feedback.style.color = '#c00'; feedback.textContent = 'Please enter your URL first.'; return; }
+    this.disabled = true;
+    feedback.style.color = '#57606a';
+    feedback.textContent = 'Submitting…';
+    fetch(SUPABASE_URL + '/rest/v1/submissions', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'apikey': SUPABASE_ANON_KEY,
+        'Authorization': 'Bearer ' + SUPABASE_ANON_KEY,
+        'Prefer': 'return=minimal'
+      },
+      body: JSON.stringify({ url: url, source: 'ceo' })
+    }).then(function (res) {
+      if (res.ok) {
+        feedback.style.color = '#2da44e';
+        feedback.textContent = 'Thank you! Your page has been shared.';
+        if (typeof gtag === 'function') gtag('event', 'ceo_url_submitted');
+        input.disabled = true;
+        document.getElementById('url-submit').style.display = 'none';
+      } else {
+        return res.text().then(function (t) { throw new Error(t); });
+      }
+    }).catch(function () {
+      feedback.style.color = '#c00';
+      feedback.textContent = 'Something went wrong — please try again.';
+      document.getElementById('url-submit').disabled = false;
+    });
+  });
+
+})();
+</script>
 </body>
 </html>
