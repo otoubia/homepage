@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Live Progress</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif; max-width: 1100px; margin: 0 auto; padding: 36px 24px 80px; color: #24292f; line-height: 1.5; font-size: 15px; background: #fff; }
+  h1 { font-size: 1.4em; font-weight: 700; }
+  h2 { font-size: 1em; font-weight: 700; margin: 2em 0 .8em; }
+  a { color: #003DA5; }
+  .top { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 1.5em; }
+  .controls { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; font-size: .9em; color: #57606a; }
+  select, input[type="password"] { font: inherit; padding: 6px 10px; border: 1px solid #d0d7de; border-radius: 6px; background: #fff; }
+  button { font: inherit; padding: 6px 14px; border-radius: 6px; border: 1px solid #d0d7de; background: #f6f8fa; cursor: pointer; }
+  button.primary { background: #003DA5; border-color: #003DA5; color: #fff; font-weight: 600; }
+  .linklike { background: none; border: none; padding: 0; color: #57606a; text-decoration: underline; }
+  #status { font-size: .85em; color: #57606a; }
+  #status.err { color: #c00; }
+  .tiles { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 12px; }
+  .tile { border: 1px solid #d0d7de; border-radius: 10px; padding: 16px 18px; }
+  .tile .num { font-size: 2em; font-weight: 700; color: #003DA5; font-variant-numeric: tabular-nums; }
+  .tile .lbl { font-size: .85em; color: #57606a; }
+  .bars { display: grid; gap: 8px; }
+  .bar-row { display: grid; grid-template-columns: 190px 1fr 70px; align-items: center; gap: 12px; font-size: .9em; }
+  .bar-track { height: 18px; background: #eef1f5; border-radius: 4px; overflow: hidden; }
+  .bar-fill { height: 100%; background: #003DA5; transition: width .4s; }
+  .bar-count { text-align: right; font-variant-numeric: tabular-nums; color: #57606a; }
+  table { width: 100%; border-collapse: collapse; font-size: .9em; }
+  th, td { text-align: left; padding: 8px 10px; border-bottom: 1px solid #eaeef2; vertical-align: middle; }
+  th { font-size: .8em; text-transform: uppercase; letter-spacing: .04em; color: #57606a; }
+  td.mono { font-family: ui-monospace, Consolas, Menlo, monospace; }
+  .dots { display: flex; gap: 4px; }
+  .dot { width: 20px; height: 20px; border-radius: 50%; border: 1px solid #d0d7de; font-size: .7em; display: flex; align-items: center; justify-content: center; color: #8c959f; }
+  .dot.on { background: #2da44e; border-color: #2da44e; color: #fff; font-weight: 700; }
+  .live { display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: #2da44e; margin-right: 6px; }
+  .idle { display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: #d0d7de; margin-right: 6px; }
+  .empty { color: #57606a; padding: 20px 10px; }
+  #key-form { max-width: 520px; margin: 3em auto; border: 1px solid #d0d7de; border-radius: 10px; padding: 24px; }
+  #key-form p { font-size: .9em; color: #57606a; margin-bottom: 12px; }
+  #key-form input { width: 100%; margin-bottom: 12px; }
+  .table-wrap { overflow-x: auto; }
+</style>
+</head>
+<body>
+
+<div id="key-form" hidden>
+  <h1 style="margin-bottom:.6em">Live Progress</h1>
+  <p>Paste your Supabase <strong>secret key</strong> (Project Settings → API Keys → Secret key, or the legacy <code>service_role</code> key). It is kept only in this browser and never sent anywhere except Supabase.</p>
+  <input id="key-input" type="password" placeholder="sb_secret_… or eyJ…" autocomplete="off">
+  <button class="primary" id="key-save" type="button">Open dashboard</button>
+</div>
+
+<div id="dash" hidden>
+  <div class="top">
+    <h1>Live Progress <span style="font-weight:400;color:#57606a;font-size:.7em">— participants active in the last hour</span></h1>
+    <div class="controls">
+      <label>Page
+        <select id="page-filter">
+          <option value="ceo">CEO (instructions_ceo)</option>
+          <option value="students">Students (instructions)</option>
+          <option value="">Both</option>
+        </select>
+      </label>
+      <span id="status">Loading…</span>
+      <button class="linklike" id="forget" type="button">Forget key</button>
+    </div>
+  </div>
+
+  <div class="tiles">
+    <div class="tile"><div class="num" id="t-active">–</div><div class="lbl">Active in last hour</div></div>
+    <div class="tile"><div class="num" id="t-now">–</div><div class="lbl">Page open now (last 2 min)</div></div>
+    <div class="tile"><div class="num" id="t-done">–</div><div class="lbl">Completed all 8 steps</div></div>
+    <div class="tile"><div class="num" id="t-urls">–</div><div class="lbl">URLs submitted</div></div>
+  </div>
+
+  <h2>Completed, by step</h2>
+  <div class="bars" id="bars"></div>
+
+  <h2>Participants</h2>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Participant</th><th>Page</th><th>Steps</th><th>Last seen</th><th>Submitted URL</th></tr></thead>
+      <tbody id="rows"></tbody>
+    </table>
+  </div>
+</div>
+
+<script>
+(function () {
+  var SUPABASE_URL = 'https://isrcwhckbwrsqijpstvq.supabase.co';
+  var KEY_STORE = 'progress_admin_key';
+  var REFRESH_MS = 5000;
+  var STEPS = ['Generate HTML', 'GitHub account', 'New repository', 'Create index.html',
+               'Paste code', 'Commit changes', 'Pages settings', 'Visit live site'];
+
+  function getKey() { try { return localStorage.getItem(KEY_STORE); } catch (e) { return null; } }
+  function setKey(k) { try { localStorage.setItem(KEY_STORE, k); } catch (e) {} }
+  function clearKey() { try { localStorage.removeItem(KEY_STORE); } catch (e) {} }
+
+  var key = getKey();
+  var timer = null;
+  var pageSel = document.getElementById('page-filter');
+  try { var p = localStorage.getItem('progress_admin_page'); if (p !== null) pageSel.value = p; } catch (e) {}
+
+  function showForm() {
+    document.getElementById('dash').hidden = true;
+    document.getElementById('key-form').hidden = false;
+    if (timer) clearInterval(timer);
+  }
+  function showDash() {
+    document.getElementById('key-form').hidden = true;
+    document.getElementById('dash').hidden = false;
+    load();
+    if (timer) clearInterval(timer);
+    timer = setInterval(load, REFRESH_MS);
+  }
+
+  document.getElementById('key-save').addEventListener('click', function () {
+    var k = document.getElementById('key-input').value.trim();
+    if (!k) return;
+    key = k; setKey(k); showDash();
+  });
+  document.getElementById('key-input').addEventListener('keydown', function (e) {
+    if (e.key === 'Enter') document.getElementById('key-save').click();
+  });
+  document.getElementById('forget').addEventListener('click', function () { clearKey(); key = null; showForm(); });
+  pageSel.addEventListener('change', function () {
+    try { localStorage.setItem('progress_admin_page', pageSel.value); } catch (e) {}
+    load();
+  });
+
+  function ago(iso) {
+    var s = Math.max(0, Math.round((Date.now() - new Date(iso).getTime()) / 1000));
+    if (s < 60) return s + 's ago';
+    var m = Math.floor(s / 60);
+    return m + ' min ago';
+  }
+
+  function setStatus(text, isErr) {
+    var el = document.getElementById('status');
+    el.textContent = text;
+    el.className = isErr ? 'err' : '';
+  }
+
+  function load() {
+    var since = new Date(Date.now() - 3600 * 1000).toISOString();
+    var q = '/rest/v1/participants?select=*&last_seen=gte.' + encodeURIComponent(since) + '&order=first_seen.asc';
+    if (pageSel.value) q += '&page=eq.' + encodeURIComponent(pageSel.value);
+    var headers = { apikey: key };
+    if (key.indexOf('eyJ') === 0) headers.Authorization = 'Bearer ' + key;
+    fetch(SUPABASE_URL + q, { headers: headers }).then(function (res) {
+      if (res.status === 401 || res.status === 403) throw new Error('Key rejected — click "Forget key" and paste the secret key.');
+      if (!res.ok) return res.text().then(function (t) { throw new Error('Error ' + res.status + ': ' + t); });
+      return res.json();
+    }).then(function (rows) {
+      render(rows);
+      setStatus('Updated ' + new Date().toLocaleTimeString() + ' · refreshes every 5s', false);
+    }).catch(function (err) {
+      setStatus(err.message || 'Could not load data', true);
+    });
+  }
+
+  function render(rows) {
+    var now = Date.now();
+    var counts = STEPS.map(function () { return 0; });
+    var done = 0, urls = 0, live = 0;
+    rows.forEach(function (r) {
+      var steps = r.steps || [];
+      steps.forEach(function (s) { if (s >= 1 && s <= 8) counts[s - 1]++; });
+      if (STEPS.every(function (_, i) { return steps.indexOf(i + 1) !== -1; })) done++;
+      if (r.url) urls++;
+      if (now - new Date(r.last_seen).getTime() < 120000) live++;
+    });
+    document.getElementById('t-active').textContent = rows.length;
+    document.getElementById('t-now').textContent = live;
+    document.getElementById('t-done').textContent = done;
+    document.getElementById('t-urls').textContent = urls;
+
+    var bars = document.getElementById('bars');
+    bars.innerHTML = '';
+    STEPS.forEach(function (name, i) {
+      var row = document.createElement('div'); row.className = 'bar-row';
+      var lbl = document.createElement('div'); lbl.textContent = (i + 1) + '. ' + name;
+      var track = document.createElement('div'); track.className = 'bar-track';
+      var fill = document.createElement('div'); fill.className = 'bar-fill';
+      fill.style.width = rows.length ? (100 * counts[i] / rows.length) + '%' : '0';
+      track.appendChild(fill);
+      var c = document.createElement('div'); c.className = 'bar-count'; c.textContent = counts[i] + ' / ' + rows.length;
+      row.appendChild(lbl); row.appendChild(track); row.appendChild(c);
+      bars.appendChild(row);
+    });
+
+    var tbody = document.getElementById('rows');
+    tbody.innerHTML = '';
+    if (!rows.length) {
+      var tr0 = document.createElement('tr'); var td0 = document.createElement('td');
+      td0.colSpan = 5; td0.className = 'empty'; td0.textContent = 'No one active in the last hour yet.';
+      tr0.appendChild(td0); tbody.appendChild(tr0);
+      return;
+    }
+    rows.forEach(function (r, idx) {
+      var tr = document.createElement('tr');
+      var isLive = now - new Date(r.last_seen).getTime() < 120000;
+
+      var td1 = document.createElement('td'); td1.className = 'mono';
+      var ind = document.createElement('span'); ind.className = isLive ? 'live' : 'idle';
+      td1.appendChild(ind);
+      td1.appendChild(document.createTextNode('#' + (idx + 1) + ' · ' + String(r.id).slice(0, 4)));
+
+      var td2 = document.createElement('td'); td2.textContent = r.page === 'ceo' ? 'CEO' : 'Students';
+
+      var td3 = document.createElement('td');
+      var dots = document.createElement('div'); dots.className = 'dots';
+      var steps = r.steps || [];
+      for (var s = 1; s <= 8; s++) {
+        var d = document.createElement('span');
+        d.className = 'dot' + (steps.indexOf(s) !== -1 ? ' on' : '');
+        d.textContent = s; d.title = 'Step ' + s + ': ' + STEPS[s - 1];
+        dots.appendChild(d);
+      }
+      td3.appendChild(dots);
+
+      var td4 = document.createElement('td'); td4.textContent = ago(r.last_seen);
+
+      var td5 = document.createElement('td');
+      if (r.url) {
+        if (/^https?:\/\//i.test(r.url)) {
+          var a = document.createElement('a'); a.href = r.url; a.target = '_blank'; a.rel = 'noopener noreferrer';
+          a.textContent = r.url; td5.appendChild(a);
+        } else { td5.textContent = r.url; }
+      } else { td5.textContent = '—'; td5.style.color = '#8c959f'; }
+
+      [td1, td2, td3, td4, td5].forEach(function (td) { tr.appendChild(td); });
+      tbody.appendChild(tr);
+    });
+  }
+
+  if (key) showDash(); else showForm();
+})();
+</script>
+</body>
+</html>
