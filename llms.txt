@@ -7,6 +7,7 @@ This file is a plain-text summary of https://otoubia.github.io/homepage/ for lan
 ## Profile
 
 - [Homepage](https://otoubia.github.io/homepage/): full CV-based profile
+- [ORCID](https://orcid.org/0000-0001-7493-9641)
 - [LinkedIn](https://www.linkedin.com/in/olivier-toubia-47273b4/)
 - [GitHub](https://github.com/otoubia)
 - Email: ot2107@gsb.columbia.edu
