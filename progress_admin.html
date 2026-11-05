@@ -42,6 +42,8 @@
   #key-form p { font-size: .9em; color: #57606a; margin-bottom: 12px; }
   #key-form input { width: 100%; margin-bottom: 12px; }
   .table-wrap { overflow-x: auto; }
+  a.url { text-decoration: underline; word-break: break-all; cursor: pointer; }
+  a.url:hover { color: #002a73; }
 </style>
 </head>
 <body>
@@ -139,6 +141,20 @@
     return m + ' min ago';
   }
 
+  var lastSig = null;
+
+  // Turn a submitted URL into a safe clickable href; adds https:// when the scheme is missing.
+  function toHref(u) {
+    if (!u) return null;
+    u = String(u).trim();
+    if (!/^https?:\/\//i.test(u)) {
+      if (/^[a-z][a-z0-9+.-]*:/i.test(u) || /\s/.test(u) || u.indexOf('.') === -1) return null;
+      u = 'https://' + u.replace(/^\/+/, '');
+    }
+    try { var p = new URL(u); return (p.protocol === 'http:' || p.protocol === 'https:') ? p.href : null; }
+    catch (e) { return null; }
+  }
+
   function setStatus(text, isErr) {
     var el = document.getElementById('status');
     el.textContent = text;
@@ -193,7 +209,20 @@
       bars.appendChild(row);
     });
 
+    // Rebuild the table only when its content changes, so links stay clickable between refreshes.
     var tbody = document.getElementById('rows');
+    var sig = JSON.stringify(rows.map(function (r) {
+      return [r.id, r.page, r.steps, r.url, now - new Date(r.last_seen).getTime() < 120000];
+    }));
+    if (sig === lastSig) {
+      Array.prototype.forEach.call(tbody.querySelectorAll('td.ago'), function (td) {
+        var r = rows.filter(function (x) { return String(x.id) === td.parentNode.getAttribute('data-id'); })[0];
+        if (r) td.setAttribute('data-ts', r.last_seen);
+        td.textContent = ago(td.getAttribute('data-ts'));
+      });
+      return;
+    }
+    lastSig = sig;
     tbody.innerHTML = '';
     if (!rows.length) {
       var tr0 = document.createElement('tr'); var td0 = document.createElement('td');
@@ -202,7 +231,7 @@
       return;
     }
     rows.forEach(function (r, idx) {
-      var tr = document.createElement('tr');
+      var tr = document.createElement('tr'); tr.setAttribute('data-id', String(r.id));
       var isLive = now - new Date(r.last_seen).getTime() < 120000;
 
       var td1 = document.createElement('td'); td1.className = 'mono';
@@ -223,15 +252,15 @@
       }
       td3.appendChild(dots);
 
-      var td4 = document.createElement('td'); td4.textContent = ago(r.last_seen);
+      var td4 = document.createElement('td'); td4.className = 'ago'; td4.setAttribute('data-ts', r.last_seen); td4.textContent = ago(r.last_seen);
 
       var td5 = document.createElement('td');
-      if (r.url) {
-        if (/^https?:\/\//i.test(r.url)) {
-          var a = document.createElement('a'); a.href = r.url; a.target = '_blank'; a.rel = 'noopener noreferrer';
-          a.textContent = r.url; td5.appendChild(a);
-        } else { td5.textContent = r.url; }
-      } else { td5.textContent = '—'; td5.style.color = '#8c959f'; }
+      var href = toHref(r.url);
+      if (href) {
+        var a = document.createElement('a'); a.href = href; a.target = '_blank'; a.rel = 'noopener noreferrer';
+        a.className = 'url'; a.textContent = String(r.url).trim(); td5.appendChild(a);
+      } else if (r.url) { td5.textContent = r.url; }
+      else { td5.textContent = '—'; td5.style.color = '#8c959f'; }
 
       [td1, td2, td3, td4, td5].forEach(function (td) { tr.appendChild(td); });
       tbody.appendChild(tr);
