@@ -147,6 +147,8 @@
   function toHref(u) {
     if (!u) return null;
     u = String(u).trim();
+    // Repair mistyped schemes: "https:site", "https:/site", "http//site", "https:///site".
+    u = u.replace(/^(https?)(?::\/*|\/+)\s*/i, '$1://');
     if (!/^https?:\/\//i.test(u)) {
       if (/^[a-z][a-z0-9+.-]*:/i.test(u) || /\s/.test(u) || u.indexOf('.') === -1) return null;
       u = 'https://' + u.replace(/^\/+/, '');
